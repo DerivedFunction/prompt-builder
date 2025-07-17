@@ -3,30 +3,35 @@ import NavItem from "./nav-item";
 import menu_close from "@/images/menu_close.svg";
 import menu_open from "@/images/menu_open.svg";
 import menu from "@/images/menu.svg";
-import new_chat from "@/images/new_chat.svg";
-import history from "@/images/history.svg";
-import settings from "@/images/settings.svg";
+import command from "@/images/categories/command.svg";
+import style from "@/images/categories/style.svg";
+import format from "@/images/categories/format.svg";
+import roleplay from "@/images/categories/roleplay.svg";
+import input from "@/images/categories/input.svg";
+import code from "@/images/categories/code.svg";
+import rules from "@/images/categories/rules.svg";
 interface SidebarProps {
   expand: boolean;
   setExpand: (expand: boolean) => void;
   isHovered: boolean;
   setIsHovered: (isHovered: boolean) => void;
-  setCurrentPage: (page: string) => void;
+  setCategory: (category: string) => void;
+  category: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({
+const BuilderSidebar: React.FC<SidebarProps> = ({
   expand,
   setExpand,
   isHovered,
   setIsHovered,
-  setCurrentPage,
+  setCategory,
 }) => {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 h-screen transition-all z-50 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 ${
+        className={`fixed top-0 right-0 h-screen transition-all z-50 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 ${
           expand
-            ? "w-64 shadow-lg md:shadow-none"
+            ? "w-48 shadow-lg md:shadow-none"
             : "md:w-12 w-0 max-md:opacity-0"
         }`}
       >
@@ -43,7 +48,7 @@ const Sidebar: React.FC<SidebarProps> = ({
                 height={20}
                 alt="Toggle menu"
                 onClick={() => setExpand(!expand)}
-                className="dark:invert"
+                className="dark:invert rotate-180"
               />
             </div>
           </div>
@@ -55,43 +60,78 @@ const Sidebar: React.FC<SidebarProps> = ({
                 height={20}
                 alt="Close menu"
                 onClick={() => setExpand(false)}
-                className="dark:invert"
+                className="dark:invert rotate-180"
               />
             </div>
           </div>
           <div className="pt-10 h-full flex flex-col justify-between">
             <div className="">
               <NavItem
-                image={new_chat}
-                text={"New Prompt"}
+                image={roleplay}
+                text={"Roleplay"}
                 expand={expand}
                 onClick={() => {
                   setExpand(false);
-                  setCurrentPage("new-prompt");
+                  setCategory("roleplay");
                 }}
               />
               <NavItem
-                image={history}
-                text={"View History"}
+                image={command}
+                text={"Main Action"}
                 expand={expand}
                 onClick={() => {
                   setExpand(false);
-                  setCurrentPage("history");
+                  setCategory("command");
+                }}
+              />
+              <NavItem
+                image={style}
+                text={"Style"}
+                expand={expand}
+                onClick={() => {
+                  setExpand(false);
+                  setCategory("style");
+                }}
+              />
+              <NavItem
+                image={format}
+                text={"Format"}
+                expand={expand}
+                onClick={() => {
+                  setExpand(false);
+                  setCategory("format");
+                }}
+              />
+              <NavItem
+                image={rules}
+                text={"Rules"}
+                expand={expand}
+                onClick={() => {
+                  setExpand(false);
+                  setCategory("rules");
+                }}
+              />
+
+              <NavItem
+                image={code}
+                text={"Code"}
+                expand={expand}
+                onClick={() => {
+                  setExpand(false);
+                  setCategory("code");
+                }}
+              />
+              <NavItem
+                image={input}
+                text={"Variables"}
+                expand={expand}
+                onClick={() => {
+                  setExpand(false);
+                  setCategory("input");
                 }}
               />
             </div>
           </div>
-          {/** Profile Icon on bottom */}
-
-          <NavItem
-            image={settings}
-            text={"View Settings"}
-            expand={expand}
-            onClick={() => {
-              setExpand(false);
-              setCurrentPage("settings");
-            }}
-          />
         </div>
       </div>
       {/* Overlay for mobile */}
@@ -105,4 +145,4 @@ const Sidebar: React.FC<SidebarProps> = ({
   );
 };
 
-export default Sidebar;
+export default BuilderSidebar;
