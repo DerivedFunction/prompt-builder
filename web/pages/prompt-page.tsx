@@ -28,8 +28,11 @@ const PromptPage = () => {
       (item) => item.category === category
     );
     if (!block) return null;
-    return block.blocks.map((b) => (
-      <div key={b.type}>
+    let beforeBlock = block.blocks.map((b) => (
+      <div
+        key={b.type}
+        className="p-3 border-2 border-gray-300 rounded-md mb-2 bg-white dark:bg-gray-800 dark:border-gray-600"
+      >
         {b.template}
         {Array.from(b.options).map((o) => {
           console.log(o);
@@ -37,23 +40,36 @@ const PromptPage = () => {
         })}
       </div>
     ));
+    let afterBlock = beforeBlock; // Find the {options} and move the elements to them
+    return afterBlock;
   };
   const buildType = (type: string, values: Array<string>) => {
     let x = null;
     switch (type) {
       case "dropdown":
         x = (
-          <>
-            <select defaultValue={values[0]}>
-              {values.map((label) => {
-                return <option key={label}>{label}</option>;
-              })}
-            </select>
-          </>
+          <select
+            defaultValue={values[0]}
+            className="w-full p-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            {values.map((label) => {
+              return (
+                <option key={label} value={label}>
+                  {label}
+                </option>
+              );
+            })}
+          </select>
         );
         break;
       case "text_input":
-        x = <input type="text" placeholder={values[0]}></input>;
+        x = (
+          <input
+            type="text"
+            placeholder={values[0]}
+            className="w-full p-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        );
         break;
       default:
         break;
