@@ -1,4 +1,4 @@
-import { useState, type JSX } from "react";
+import { useState } from "react";
 import BuilderSidebar from "../components/builder-sidebar";
 import menu from "@/images/menu.svg";
 import { blocks } from "../data/builder";
@@ -33,10 +33,32 @@ const PromptPage = () => {
         {b.template}
         {Array.from(b.options).map((o) => {
           console.log(o);
-          return <div>{}</div>;
+          return <div>{buildType(o.type, o.values)}</div>;
         })}
       </div>
     ));
+  };
+  const buildType = (type: string, values: Array<string>) => {
+    let x = null;
+    switch (type) {
+      case "dropdown":
+        x = (
+          <>
+            <select defaultValue={values[0]}>
+              {values.map((label) => {
+                return <option key={label}>{label}</option>;
+              })}
+            </select>
+          </>
+        );
+        break;
+      case "text_input":
+        x = <input type="text" placeholder={values[0]}></input>;
+        break;
+      default:
+        break;
+    }
+    return x;
   };
   return (
     <div className="flex flex-col h-full w-full text-gray-900 dark:text-gray-100">
