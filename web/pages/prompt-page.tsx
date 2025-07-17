@@ -28,21 +28,66 @@ const PromptPage = () => {
       (item) => item.category === category
     );
     if (!block) return null;
-    let beforeBlock = block.blocks.map((b) => (
-      <div
-        key={b.type}
-        className="p-3 border-2 border-gray-300 rounded-md mb-2 bg-white dark:bg-gray-800 dark:border-gray-600"
-      >
-        {b.template}
-        {Array.from(b.options).map((o) => {
-          console.log(o);
-          return <div>{buildType(o.type, o.values)}</div>;
-        })}
-      </div>
-    ));
-    let afterBlock = beforeBlock; // Find the {options} and move the elements to them
+
+    const afterBlock = block.blocks.map((b) => {
+      // Build a map of variable replacements
+      const replacements: Record<string, React.ReactNode> = {};
+      for (const o of b.options) {
+        replacements[o.var] = buildType(o.type, o.values);
+      }
+
+      // Replace placeholders like {var} in the template string
+      const parsedTemplate = parseTemplateWithComponents(
+        b.template,
+        replacements
+      );
+
+      return (
+        <div
+          key={b.type}
+          className="p-3 border-2 border-gray-300 rounded-md mb-2 bg-white dark:bg-gray-800 dark:border-gray-600"
+        >
+          {parsedTemplate}
+        </div>
+      );
+    });
+
     return afterBlock;
   };
+
+  function parseTemplateWithComponents(
+    template: string,
+    components: Record<string, React.ReactNode>
+  ): React.ReactNode[] {
+    const regex = /\{(\w+)\}/g;
+    const parts: React.ReactNode[] = [];
+
+    let lastIndex = 0;
+    let match;
+
+    while ((match = regex.exec(template)) !== null) {
+      const [placeholder, key] = match;
+      const index = match.index;
+
+      // Push the text before the placeholder
+      if (index > lastIndex) {
+        parts.push(template.slice(lastIndex, index));
+      }
+
+      // Push the matching React component (or leave the placeholder if not found)
+      parts.push(components[key] ?? placeholder);
+
+      lastIndex = index + placeholder.length;
+    }
+
+    // Push any remaining text after the last match
+    if (lastIndex < template.length) {
+      parts.push(template.slice(lastIndex));
+    }
+
+    return parts;
+  }
+
   const buildType = (type: string, values: Array<string>) => {
     let x = null;
     switch (type) {
