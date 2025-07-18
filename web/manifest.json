@@ -1,0 +1,15 @@
+{
+  "short_name": "Prompt Builder",
+  "name": "Prompt Builder: Build better AI prompts. All in one place.",
+  "icons": [
+    {
+      "src": "./src/images/box.svg",
+      "sizes": "512x512",
+       "type": "image/svg+xml"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#171717",
+  "background_color": "#ffffff"
+}
