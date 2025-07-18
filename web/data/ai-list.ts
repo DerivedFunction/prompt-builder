@@ -10,9 +10,21 @@ export const aiList = [
     limit: 10240,
   },
   {
+    name: "Gemini",
+    url: "https://gemini.google.com/app",
+    limit: 31022,
+    needsPerm: true,
+  },
+  {
     name: "Grok",
     url: "https://grok.com/?q=",
     limit: 100000,
+  },
+  {
+    name: "DeepSeek",
+    url: "https://chat.deepseek.com/",
+    limit: 100000,
+    needsPerm: true,
   },
   {
     name: "Claude",
@@ -27,6 +39,12 @@ export const aiList = [
   {
     name: "Mistral",
     url: "https://chat.mistral.ai/chat?q=",
+  },
+  {
+    name: "Qwen",
+    url: "https://chat.qwen.ai/",
+    limit: 10000,
+    needsPerm: true,
   },
   {
     name: "Meta",
