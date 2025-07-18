@@ -3,7 +3,7 @@ import NavItem from "./nav-item";
 import menu_close from "@/images/menu_close.svg";
 import menu_open from "@/images/menu_open.svg";
 import menu from "@/images/menu.svg";
-import new_chat from "@/images/new_chat.svg";
+import new_prompt from "@/images/new_prompt.svg";
 import history from "@/images/history.svg";
 import settings from "@/images/settings.svg";
 interface SidebarProps {
@@ -62,7 +62,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           <div className="pt-10 h-full flex flex-col justify-between">
             <div className="">
               <NavItem
-                image={new_chat}
+                image={new_prompt}
                 text={"New Prompt"}
                 expand={expand}
                 onClick={() => {
