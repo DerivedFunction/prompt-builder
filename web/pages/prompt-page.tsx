@@ -32,15 +32,6 @@ const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
       setInputs(JSON.parse(storedInputs));
     }
   }, [category]);
-
-  // Log concatenated inputs whenever inputs change
-  useEffect(() => {
-    const concatenatedInputs = Object.entries(inputs)
-      .map(([key, value]) => `${key}: ${value}`)
-      .join(", ");
-    console.log("Concatenated Inputs:", concatenatedInputs || "No inputs yet");
-  }, [inputs]);
-
   const findCategory = (category: string) => {
     const block = (blocks as Block[]).find(
       (item) => item.category === category
@@ -120,7 +111,7 @@ const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
   }
 
   const buildType = (varName: string, type: string, values: Array<string>) => {
-    let x = null;
+    let x = <></>;
     switch (type) {
       case "dropdown":
         x = (
@@ -161,7 +152,7 @@ const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
               e.target.style.height = `${e.target.scrollHeight}px`;
             }}
             className="w-full p-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500
-             max-h-[300px] min-h-[80px] overflow-y-auto"
+             max-h-[300px] min-h-[200px] overflow-y-auto"
           />
         );
         break;
