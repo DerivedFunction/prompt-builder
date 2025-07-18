@@ -53,13 +53,13 @@ function App() {
 
         <main
           className={`flex-1 transition-all duration-300 flex flex-col justify-between overflow-hidden ${
-            expand ? "md:ml-64 md:mr-12" : "ml-12 mr-12"
+            expand ? `md:ml-64` : "md:ml-12 md:mr-12"
           }`}
         >
           <div className="flex items-start justify-center p-4 flex-1 overflow-y-auto">
             <div className={`w-full space-y-3 py-4`}>{mainPage}</div>
           </div>
-          <div className="pb-6 mr-2 ml-2 flex w-full justify-center">
+          <div className="pb-6 flex w-full justify-center">
             <PromptBox prompt={prompt} setPrompt={setPrompt}/>
           </div>
         </main>

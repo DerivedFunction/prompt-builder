@@ -3,7 +3,7 @@
   "name": "Prompt Builder",
   "version": "2025.07.18",
   "description": "Build better AI prompts by following a step-by-step guide.",
-  "icons": {  
+  "icons": {
     "32": "icon32.png",
     "48": "icon48.png"
   },
@@ -12,5 +12,9 @@
       "32": "icon32.png",
       "48": "icon48.png"
     }
-  }
+  },
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "permissions": ["sidePanel"]
 }

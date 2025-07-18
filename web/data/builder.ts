@@ -263,7 +263,7 @@ export const blocks = [
 
     blocks: [
       {
-        template: "Rules to follow: {rules}",
+        template: "Rules: {rules}",
         options: [
           {
             var: "rules",
@@ -278,7 +278,7 @@ export const blocks = [
     category: "define",
     blocks: [
       {
-        template: "Refer to these definitions when needed: {definitions} ",
+        template: "Refer to these definitions: {definitions} ",
         options: [
           {
             var: "definitions",
@@ -293,7 +293,7 @@ export const blocks = [
     category: "example",
     blocks: [
       {
-        template: " Use these examples when needed: {examples} ",
+        template: "Examples: {examples} ",
         options: [
           {
             var: "examples",

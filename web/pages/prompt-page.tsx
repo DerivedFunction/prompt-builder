@@ -292,7 +292,7 @@ const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
         setInputs={setInputs}
         prompt={generateAllOutputs()}
       />
-      <div className="flex flex-row items-center gap-4 mb-2">
+      <div className="flex flex-col md:flex-row items-center gap-4 mb-2">
         <h1 className="text-2xl font-bold align-center flex-3">
           Prompt Builder Playground
         </h1>
@@ -310,7 +310,7 @@ const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
           <div className="flex-1 p-4 min-h-[200px] max-h-[530px] overflow-y-auto">
             {findCategory(category)}
           </div>
-          <div className="flex-1 p-4 border-1 border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 rounded-md h-[530px] overflow-auto">
+          <div className="hidden flex-1 p-4 border-1 border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 rounded-md h-[530px] overflow-auto">
             <p className="whitespace-pre-wrap">{generateOutput()}</p>
           </div>
         </div>
