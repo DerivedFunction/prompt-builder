@@ -10,6 +10,9 @@ import define from "@/images/categories/definition.svg";
 import rules from "@/images/categories/rules.svg";
 import text from "@/images/categories/text.svg";
 import code from "@/images/categories/code.svg";
+import input from "@/images/categories/input.svg"
+import erase from "@/images/erase.svg";
+
 
 interface SidebarProps {
   expand: boolean;
@@ -18,6 +21,7 @@ interface SidebarProps {
   setIsHovered: (isHovered: boolean) => void;
   setCategory: (category: string) => void;
   category: string;
+  setInputs: (inputs: Record<string, string>) => void;
 }
 
 const BuilderSidebar: React.FC<SidebarProps> = ({
@@ -26,6 +30,7 @@ const BuilderSidebar: React.FC<SidebarProps> = ({
   isHovered,
   setIsHovered,
   setCategory,
+  setInputs
 }) => {
   return (
     <>
@@ -69,7 +74,7 @@ const BuilderSidebar: React.FC<SidebarProps> = ({
             <div className="">
               <NavItem
                 image={roleplay}
-                text={"Roleplay"}
+                text={"Role"}
                 expand={expand}
                 onClick={() => {
                   setExpand(false);
@@ -124,6 +129,15 @@ const BuilderSidebar: React.FC<SidebarProps> = ({
                 }}
               />
               <NavItem
+                image={input}
+                text={"Examples"}
+                expand={expand}
+                onClick={() => {
+                  setExpand(false);
+                  setCategory("example");
+                }}
+              />
+              <NavItem
                 image={text}
                 text={"Input"}
                 expand={expand}
@@ -134,6 +148,22 @@ const BuilderSidebar: React.FC<SidebarProps> = ({
               />
             </div>
           </div>
+          <NavItem
+            image={erase}
+            text={"Clear All"}
+            expand={expand}
+            onClick={() => {
+              setExpand(false);
+              // find all input_XX keys
+              const keys = Object.keys(localStorage).filter((key) =>
+                key.startsWith("inputs_")
+              );
+              keys.forEach((key) => localStorage.removeItem(key));
+              setCategory("clear");
+              setInputs({});
+              setCategory("roleplay")
+            }}
+          />
         </div>
       </div>
       {/* Overlay for mobile */}

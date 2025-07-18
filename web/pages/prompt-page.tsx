@@ -1,14 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import BuilderSidebar from "../components/builder-sidebar";
 import menu from "@/images/menu.svg";
 import { blocks } from "../data/builder";
-import forward from "@/images/forward.svg";
-// Define the type for blocks to ensure TypeScript compatibility
+import erase from "@/images/erase.svg";
+
 interface Block {
   category: string;
-  label: string;
   blocks: Array<{
-    type: string;
     template: string;
     options: Array<{
       var: string;
@@ -18,11 +16,31 @@ interface Block {
   }>;
 }
 
-const PromptPage = () => {
+interface PromptProps {
+  setPrompt: (prompt: string) => void;
+}
+const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
   const [expand, setExpand] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [category, setCategory] = useState("command");
-  // Ensure blocks is treated as an array
+  const [inputs, setInputs] = useState<Record<string, string>>({});
+
+  // Effect to preserve inputs when switching categories
+  useEffect(() => {
+    const storedInputs = localStorage.getItem(`inputs_${category}`);
+    if (storedInputs) {
+      setInputs(JSON.parse(storedInputs));
+    }
+  }, [category]);
+
+  // Log concatenated inputs whenever inputs change
+  useEffect(() => {
+    const concatenatedInputs = Object.entries(inputs)
+      .map(([key, value]) => `${key}: ${value}`)
+      .join(", ");
+    console.log("Concatenated Inputs:", concatenatedInputs || "No inputs yet");
+  }, [inputs]);
+
   const findCategory = (category: string) => {
     const block = (blocks as Block[]).find(
       (item) => item.category === category
@@ -30,13 +48,11 @@ const PromptPage = () => {
     if (!block) return null;
 
     const afterBlock = block.blocks.map((b) => {
-      // Build a map of variable replacements
       const replacements: Record<string, React.ReactNode> = {};
       for (const o of b.options) {
-        replacements[o.var] = buildType(o.type, o.values);
+        replacements[o.var] = buildType(o.var, o.type, o.values);
       }
 
-      // Replace placeholders like {var} in the template string
       const parsedTemplate = parseTemplateWithComponents(
         b.template,
         replacements
@@ -44,18 +60,18 @@ const PromptPage = () => {
 
       return (
         <div
-          key={b.type}
+          key={b.template}
           className="p-3 border-2 border-gray-300 rounded-md mb-2 bg-white dark:bg-gray-800 dark:border-gray-600 flex flex-col gap-3 text-lg"
         >
           {parsedTemplate}
           <div>
             <button
-              onClick={() => {}}
+              onClick={clearInputs}
               className={`p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700`}
             >
               <img
                 className="w-3.5 aspect-square dark:invert"
-                src={forward}
+                src={erase}
                 alt=""
                 height={20}
                 width={20}
@@ -67,6 +83,10 @@ const PromptPage = () => {
     });
 
     return afterBlock;
+  };
+  const clearInputs = () => {
+    setInputs({});
+    localStorage.removeItem(`inputs_${category}`);
   };
 
   function parseTemplateWithComponents(
@@ -83,18 +103,15 @@ const PromptPage = () => {
       const [placeholder, key] = match;
       const index = match.index;
 
-      // Push the text before the placeholder
       if (index > lastIndex) {
         parts.push(template.slice(lastIndex, index));
       }
 
-      // Push the matching React component (or leave the placeholder if not found)
       parts.push(components[key] ?? placeholder);
 
       lastIndex = index + placeholder.length;
     }
 
-    // Push any remaining text after the last match
     if (lastIndex < template.length) {
       parts.push(template.slice(lastIndex));
     }
@@ -102,22 +119,22 @@ const PromptPage = () => {
     return parts;
   }
 
-  const buildType = (type: string, values: Array<string>) => {
+  const buildType = (varName: string, type: string, values: Array<string>) => {
     let x = null;
     switch (type) {
       case "dropdown":
         x = (
           <select
-            defaultValue={values[0]}
+            value={inputs[varName] || ""}
+            onChange={(e) => handleInputChange(varName, e.target.value)}
             className="w-full p-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            {values.map((label) => {
-              return (
-                <option key={label} value={label}>
-                  {label}
-                </option>
-              );
-            })}
+            <option key="" value=""></option>
+            {values.map((label) => (
+              <option key={label} value={label}>
+                {label}
+              </option>
+            ))}
           </select>
         );
         break;
@@ -126,14 +143,79 @@ const PromptPage = () => {
           <input
             type="text"
             placeholder={values[0]}
+            value={inputs[varName] || ""}
+            onChange={(e) => handleInputChange(varName, e.target.value)}
             className="w-full p-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         );
         break;
+      case "textarea":
+        x = (
+          <textarea
+            placeholder={values[0]}
+            value={inputs[varName] || ""}
+            onChange={(e) => {
+              handleInputChange(varName, e.target.value)
+              // auto adjust height as needed
+              e.target.style.height = "auto";
+              e.target.style.height = `${e.target.scrollHeight}px`;
+            }}
+            className="w-full p-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500
+             max-h-[300px] min-h-[80px] overflow-y-auto"
+          />
+        );
+        break;
+
       default:
         break;
     }
     return x;
+  };
+
+  const handleInputChange = (varName: string, value: string) => {
+    setInputs((prev) => {
+      const newInputs = { ...prev, [varName]: value };
+      localStorage.setItem(`inputs_${category}`, JSON.stringify(newInputs));
+      return newInputs;
+    });
+  };
+
+  const generateOutput = () => {
+    const block = (blocks as Block[]).find(
+      (item) => item.category === category
+    );
+    if (!block) return "";
+
+    let hasContent = false;
+    let finalOutput = "";
+
+    block.blocks.forEach((b) => {
+      let template = b.template;
+      let blockHasContent = false;
+
+      b.options.forEach((o) => {
+        const value = inputs[o.var] || "";
+        const placeholder = `{${o.var}}`;
+        const prefix = template.slice(0, template.indexOf(placeholder));
+        const suffix = template.slice(
+          template.indexOf(placeholder) + placeholder.length
+        );
+        const cleanedPrefix = value ? prefix : prefix.replace(/\s+$/, "");
+
+        template = `${cleanedPrefix}${value}${suffix}`;
+
+        if (value) {
+          blockHasContent = true;
+          hasContent = true;
+        }
+      });
+
+      if (blockHasContent || template.trim()) {
+        finalOutput += template + "\n";
+      }
+    });
+
+    return hasContent ? finalOutput.trim() : "";
   };
   return (
     <div className="flex flex-col h-full w-full text-gray-900 dark:text-gray-100">
@@ -160,18 +242,29 @@ const PromptPage = () => {
         setIsHovered={setIsHovered}
         setCategory={setCategory}
         category={category}
+        setInputs={setInputs}
       />
+      <div className="flex flex-row items-center gap-4 ">
+        <h1 className="text-2xl font-bold align-center">Prompt Builder Playground</h1>
+        <button
+          onClick={() => setPrompt(generateAllOutputs())}
+          className={
+            "p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+          }
+        >
+          Generate Final Prompt
+        </button>
+      </div>
 
-      <h1 className="text-2xl font-bold mb-4">Prompt Builder Playground</h1>
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-5 w-full sm:flex-row">
-          {/* Left Box */}
-          <div className="flex-1 p-4 border-2 border-gray-300 rounded-md min-h-[200px]">
+          <div className="flex-1 p-4 min-h-[200px]">
             <div className="">{findCategory(category)}</div>
           </div>
-          {/* Right Box */}
-          <div className="flex-1 p-4 border-2 border-gray-300 rounded-md min-h-[200px]">
-            <div className="text-gray-700">Output (not implemented)</div>
+          <div className="flex-1 p-4 border-2 border-gray-300 rounded-md h-[450px] overflow-auto">
+            <div className="text-gray-700 dark:text-gray-300">
+              <pre className="whitespace-pre-wrap">{generateOutput()}</pre>
+            </div>
           </div>
         </div>
       </div>
@@ -180,3 +273,50 @@ const PromptPage = () => {
 };
 
 export default PromptPage;
+
+const generateAllOutputs = () => {
+  let allOutputs = "";
+
+  (blocks as Block[]).forEach((block) => {
+    const category = block.category;
+    // Load inputs for the current category from local storage
+    const storedInputs = localStorage.getItem(`inputs_${category}`);
+    const categoryInputs = storedInputs ? JSON.parse(storedInputs) : {};
+
+    let hasContent = false;
+    let categoryOutput = "";
+
+    block.blocks.forEach((b) => {
+      let template = b.template;
+      let blockHasContent = false;
+
+      b.options.forEach((o) => {
+        const value = categoryInputs[o.var] || "";
+        const placeholder = `{${o.var}}`;
+        const prefix = template.slice(0, template.indexOf(placeholder));
+        const suffix = template.slice(
+          template.indexOf(placeholder) + placeholder.length
+        );
+        const cleanedPrefix = value ? prefix : prefix.replace(/\s+$/, "");
+
+        template = `${cleanedPrefix}${value}${suffix}`;
+
+        if (value) {
+          blockHasContent = true;
+          hasContent = true;
+        }
+      });
+
+      if (blockHasContent || template.trim()) {
+        categoryOutput += template + "\n";
+      }
+    });
+
+    if (hasContent) {
+      allOutputs += `${categoryOutput.trim()}\n`;
+    }
+  });
+
+  console.log("All Category Outputs:\n", allOutputs.trim());
+  return allOutputs.trim();
+};

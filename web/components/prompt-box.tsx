@@ -1,7 +1,10 @@
 import { useState } from "react";
 import send from "@/images/send.svg";
-const PromptBox = () => {
-  const [prompt, setPrompt] = useState("");
+interface PromptBoxProps {
+  prompt: string;
+  setPrompt: (prompt: string) => void;
+}
+const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
   const [chatbot, setChatbot] = useState("default");
   return (
     <form
@@ -10,7 +13,7 @@ const PromptBox = () => {
       <textarea
         className="outline-none w-full resize-none overflow-hidden break-words bg-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 rounded-md p-2"
         rows={2}
-        placeholder="Enter your prompt here..."
+        placeholder="What do you want to do?"
         onChange={(e) => setPrompt(e.target.value)}
         value={prompt}
         required

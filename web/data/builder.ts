@@ -1,17 +1,15 @@
 export const blocks = [
   {
     category: "roleplay",
-    label: "Role",
     blocks: [
       {
-        type: "block",
-        template: "You are a/an {adjective} {noun} {preposition} {topic}",
+        template: "You are a/an {adjective} {noun} {preposition} {topic}.",
         options: [
           {
             var: "adjective",
             type: "dropdown",
             values: [
-               
+              "helpful",
               "senior",
               "junior",
               "experienced",
@@ -22,19 +20,26 @@ export const blocks = [
               "analytical",
               "friendly",
               "formal",
-              "other",
+              "casual",
+              "humorous",
+              "concise",
+              "detailed",
+              "persuasive",
+              "informal",
+              "empathetic",
             ],
           },
           {
             var: "noun",
             type: "text_input",
-            values: ["Enter a role (e.g., doctor, developer, writer)"],
+            values: [
+              "Enter a role (e.g., doctor, developer, writer, assistant)",
+            ],
           },
           {
             var: "preposition",
             type: "dropdown",
             values: [
-               
               "on",
               "at",
               "for",
@@ -50,7 +55,7 @@ export const blocks = [
           },
           {
             var: "topic",
-            type: "text_input",
+            type: "textarea",
             values: [
               "Enter a topic or field (e.g., AI, healthcare, marketing)",
             ],
@@ -61,17 +66,14 @@ export const blocks = [
   },
   {
     category: "command",
-    label: "Main Action",
     blocks: [
       {
-        type: "block",
-        template: "Your task is to {action} {details}",
+        template: "Your task is to {action} {details}.",
         options: [
           {
             var: "action",
             type: "dropdown",
             values: [
-               
               "do",
               "explain",
               "create",
@@ -105,7 +107,7 @@ export const blocks = [
           },
           {
             var: "details",
-            type: "text_input",
+            type: "textarea",
             values: [
               "Provide details or instructions (e.g., a 500-word essay)",
             ],
@@ -116,18 +118,15 @@ export const blocks = [
   },
   {
     category: "code",
-    label: "Main Action",
     blocks: [
       {
-        type: "block",
         template:
-          "Your task is to {action} for a {type} in {language}. {details}",
+          "Your task is to {code_action} for a {code_type} in {language}. {code_details}",
         options: [
           {
-            var: "action",
+            var: "code_action",
             type: "dropdown",
             values: [
-               
               "code",
               "debug code",
               "refactor code",
@@ -148,7 +147,7 @@ export const blocks = [
             ],
           },
           {
-            var: "type",
+            var: "code_type",
             type: "dropdown",
             values: [
               "Function",
@@ -174,7 +173,6 @@ export const blocks = [
             var: "language",
             type: "dropdown",
             values: [
-               
               "Python",
               "JavaScript",
               "Java",
@@ -208,8 +206,8 @@ export const blocks = [
             ],
           },
           {
-            var: "details",
-            type: "text_input",
+            var: "code_details",
+            type: "textarea",
             values: ["Provide additional details"],
           },
         ],
@@ -218,12 +216,9 @@ export const blocks = [
   },
   {
     category: "style",
-    label: "Styling",
     blocks: [
       {
-        type: "block",
-        template:
-          "Ensure the response is {tone_style} and in {format}. For example: {example}",
+        template: "Ensure the response is {tone_style} and in {format}.",
         options: [
           {
             var: "tone_style",
@@ -246,7 +241,6 @@ export const blocks = [
               "sarcastic",
               "conversational",
               "technical",
-              "other",
             ],
           },
           {
@@ -254,38 +248,21 @@ export const blocks = [
             type: "text_input",
             values: ["paragraphs, sentences, code, etc"],
           },
-          {
-            var: "example",
-            type: "text_input",
-            values: ["Give an example (optional)."],
-          },
         ],
       },
     ],
   },
   {
     category: "rules",
-    label: "Styling",
+
     blocks: [
       {
-        type: "block",
-        template:
-          "Rules to follow: {rules} Include {include} and avoid {avoid} ",
+        template: "Rules to follow: {rules}",
         options: [
           {
             var: "rules",
             type: "text_input",
-            values: ["Enter rules ..."],
-          },
-          {
-            var: "include",
-            type: "text_input",
-            values: ["Enter rules ..."],
-          },
-          {
-            var: "avoid",
-            type: "text_input",
-            values: ["Enter rules ..."],
+            values: ["Include this and exclude that... "],
           },
         ],
       },
@@ -293,15 +270,13 @@ export const blocks = [
   },
   {
     category: "define",
-    label: "Styling",
     blocks: [
       {
-        type: "block",
         template: "Refer to these definitions when needed: {definitions} ",
         options: [
           {
             var: "definitions",
-            type: "text_input",
+            type: "textarea",
             values: ["Enter definitions ..."],
           },
         ],
@@ -309,16 +284,30 @@ export const blocks = [
     ],
   },
   {
-    category: "input",
-    label: "Input",
+    category: "example",
     blocks: [
       {
-        type: "block",
-        template: "{definitions} ",
+        template: " Use these examples when needed: {examples} ",
         options: [
           {
-            var: "definitions",
-            type: "text_input",
+            var: "examples",
+            type: "textarea",
+            values: ["Enter examples ..."],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    category: "input",
+
+    blocks: [
+      {
+        template: "{other} ",
+        options: [
+          {
+            var: "other",
+            type: "textarea",
             values: ["Enter text to paste at the end ..."],
           },
         ],

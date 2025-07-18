@@ -9,11 +9,13 @@ function App() {
   const [expand, setExpand] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [currentPage, setCurrentPage] = useState("home");
+  const [prompt, setPrompt] = useState("");
+
   let mainPage;
 
   switch (currentPage) {
     case "new-prompt":
-      mainPage = <PromptPage />;
+      mainPage = <PromptPage setPrompt={setPrompt} />;
       break;
     case "history":
       mainPage = <div>History Page</div>;
@@ -54,19 +56,13 @@ function App() {
           <div className="flex items-start justify-center p-4 flex-1 overflow-y-auto">
             <div className={`w-full space-y-3 py-4`}>{mainPage}</div>
           </div>
-          {x(false)}
+          <div className="pb-6 mr-2 ml-2 flex w-full justify-center">
+            <PromptBox prompt={prompt} setPrompt={setPrompt}/>
+          </div>
         </main>
       </div>
     </>
   );
 }
-const x = (show: boolean) => {
-  if (!show) return null;
-  return (
-    <div className="pb-6 mr-2 ml-2 flex w-full justify-center">
-      <PromptBox />
-    </div>
-  );
-};
 
 export default App;
