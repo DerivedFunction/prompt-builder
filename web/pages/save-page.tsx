@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
-import load from "@/images/menu_open.svg"; // This icon will be used for "Load"
+import new_prompt from "@/images/new_prompt.svg";
 import erase from "@/images/erase.svg";
 import {
   getSaves,
   deleteAllSaves,
   deleteSave,
   loadSaveToLocalStorage,
+  addSave,
 } from "../data/database";
+import { blocks } from "../data/builder";
 
-// Interface for a single save entry
 interface SaveEntry {
   id: number;
   name: string;
   timestamp: number;
-  inputs: { type: string; data: unknown }[];
+  inputs: { type: string; data: Record<string, string> }[];
 }
-
 const SavesPage: React.FC = () => {
   const [saves, setSaves] = useState<SaveEntry[]>([]);
 
@@ -43,13 +43,14 @@ const SavesPage: React.FC = () => {
     }
   };
 
-  const handleLoadSave = (inputs: { type: string; data: unknown }[]) => {
+  const handleLoadSave = (
+    inputs: { type: string; data: Record<string, string> }[]
+  ) => {
     try {
       loadSaveToLocalStorage(inputs);
       alert(
         "Save loaded successfully! The page will now reload to apply changes."
       );
-      // Reload the page to ensure all components re-read from localStorage
       window.location.reload();
     } catch (err) {
       console.error("Failed to load save:", err);
@@ -57,8 +58,164 @@ const SavesPage: React.FC = () => {
     }
   };
 
+  const handleDownload = async () => {
+    try {
+      const data = await getSaves();
+      const jsonData = JSON.stringify(data, null, 2);
+      const blob = new Blob([jsonData], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `saves_backup_${Date.now()}.json`;
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+    } catch (error) {
+      console.error("Error downloading saves:", error);
+    }
+  };
+
+  const recreatePrompts = (saveData: SaveEntry[]) => {
+    const results: string[] = [];
+
+    saveData.forEach((save, index) => {
+      const prompts: string[] = [];
+      save.inputs.forEach((input) => {
+        const categoryName = input.type.replace("inputs_", "");
+        const block = blocks.find((b) => b.category === categoryName);
+        if (!block) return;
+
+        block.blocks.forEach((b) => {
+          let prompt = b.template;
+          let hasContent = false;
+
+          b.options.forEach((option) => {
+            const value = input.data[option.var] || "";
+            const placeholder = `{${option.var}}`;
+            const prefix = prompt.slice(0, prompt.indexOf(placeholder));
+            const suffix = prompt.slice(
+              prompt.indexOf(placeholder) + placeholder.length
+            );
+            const cleanedPrefix = value ? prefix : prefix.replace(/\s+$/, "");
+            prompt = `${cleanedPrefix}${value}${suffix}`;
+            if (value) hasContent = true;
+          });
+
+          if (hasContent || prompt.trim()) {
+            prompts.push(prompt);
+          }
+        });
+      });
+
+      if (prompts.length > 0) {
+        results.push(
+          `SAVE #${index + 1} - ${save.name} (${new Date(
+            save.timestamp
+          ).toLocaleString()})\n${prompts.join("\n")}\n`
+        );
+      }
+    });
+
+    return results.join("\n");
+  };
+
+  const downloadPromptsAsTxt = (text: string, filename: string) => {
+    const blob = new Blob([text], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    URL.revokeObjectURL(url);
+    document.body.removeChild(a);
+  };
+
+  const handleDownloadPrompts = () => {
+    const promptsText = recreatePrompts(saves);
+    if (promptsText) {
+      downloadPromptsAsTxt(promptsText, `prompts_${Date.now()}.txt`);
+    } else {
+      alert("No prompts to download.");
+    }
+  };
+
+  const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    try {
+      const text = await file.text();
+      const uploadedData: SaveEntry[] = JSON.parse(text);
+
+      // Validate uploaded data
+      const isValid = uploadedData.every(
+        (save) =>
+          typeof save.id === "number" &&
+          typeof save.name === "string" &&
+          typeof save.timestamp === "number" &&
+          Array.isArray(save.inputs) &&
+          save.inputs.every(
+            (input) =>
+              typeof input.type === "string" &&
+              typeof input.data === "object" &&
+              input.data !== null
+          )
+      );
+
+      if (!isValid) {
+        alert("Invalid save data format.");
+        return;
+      }
+
+      // Add each save to the database
+      for (const save of uploadedData) {
+        await addSave(save);
+      }
+
+      // Refresh the saves list
+      await fetchSaves();
+      alert("Saves imported successfully!");
+    } catch (error) {
+      console.error("Error importing saves:", error);
+      alert("Failed to import saves. Please ensure the file is a valid JSON.");
+    }
+
+    // Reset the input to allow re-uploading the same file
+    event.target.value = "";
+  };
   return (
     <div className="h-full w-full text-gray-900 dark:text-gray-100">
+      <div className="flex gap-2 mb-4">
+        <label
+          onClick={() => handleUpload}
+          className="p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 text-xs"
+        >
+          Import Data
+          <input
+            type="file"
+            accept=".json"
+            onChange={handleUpload}
+            className="hidden"
+          />
+        </label>
+        <button
+          onClick={handleDownload}
+          className="p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 text-xs"
+        >
+          Export Data
+        </button>
+        <button
+          onClick={handleDownloadPrompts}
+          title="Download Prompts as text"
+          className="p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 text-xs"
+        >
+          Download Text
+        </button>
+      </div>
       <div className="p-4 border-2 border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600">
         <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
           Saved Prompts
@@ -96,7 +253,7 @@ const SavesPage: React.FC = () => {
                   {saves.map((entry) => (
                     <tr
                       key={entry.id}
-                      className="border-t border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                      className="border-T border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
                     >
                       <td className="p-3">
                         {new Date(entry.timestamp).toLocaleString()}
@@ -109,8 +266,8 @@ const SavesPage: React.FC = () => {
                           title="Load this save"
                         >
                           <img
-                            className="w-3.5 aspect-square dark:invert rotate-90"
-                            src={load}
+                            className="w-3.5 aspect-square dark:invert"
+                            src={new_prompt}
                             alt="Load Save"
                             height={20}
                             width={20}
@@ -127,7 +284,7 @@ const SavesPage: React.FC = () => {
                             alt="Delete Save"
                             height={20}
                             width={20}
-                          />
+                          ></img>
                         </button>
                       </td>
                     </tr>

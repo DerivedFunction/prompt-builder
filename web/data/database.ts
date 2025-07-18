@@ -1,5 +1,10 @@
 import { openDB } from "idb";
-
+interface SaveEntry {
+  id?: number;
+  name: string;
+  timestamp: number;
+  inputs: { type: string; data: Record<string, string> }[];
+}
 export async function getDB() {
   return openDB("history-db", 1, {
     upgrade(db) {
@@ -98,7 +103,9 @@ export async function deleteAllSaves() {
  * This function clears existing 'inputs_' prefixed items and sets new ones from the save.
  * @param inputs - The array of input objects from a save entry.
  */
-export function loadSaveToLocalStorage(inputs: { type: string; data: unknown }[]) {
+export function loadSaveToLocalStorage(
+  inputs: { type: string; data: unknown }[]
+) {
   // 1. Clear all existing items with the 'inputs_' prefix from localStorage
   Object.keys(localStorage)
     .filter((key) => key.startsWith("inputs_"))
@@ -109,3 +116,56 @@ export function loadSaveToLocalStorage(inputs: { type: string; data: unknown }[]
     localStorage.setItem(input.type, JSON.stringify(input.data));
   });
 }
+
+export const addSave = async (saveData: {
+  name: string;
+  inputs: { type: string; data: Record<string, string> }[];
+  timestamp?: number;
+}) => {
+  // Validate the save data structure
+  if (!saveData.name || !Array.isArray(saveData.inputs)) {
+    throw new Error(
+      "Invalid save data format: 'name' and 'inputs' are required."
+    );
+  }
+
+  // Validate inputs array elements
+  if (
+    !saveData.inputs.every(
+      (input) =>
+        typeof input.type === "string" &&
+        typeof input.data === "object" &&
+        input.data !== null
+    )
+  ) {
+    throw new Error(
+      "Invalid save data format: each input must have a 'type' string and 'data' object."
+    );
+  }
+
+  // Ensure timestamp is a valid number or default to current time
+  const timestamp =
+    typeof saveData.timestamp === "number" ? saveData.timestamp : Date.now();
+
+  // Get the database instance
+  const db = await getDB();
+
+  try {
+    // Create the SaveEntry object
+    const save: SaveEntry = {
+      name: saveData.name,
+      inputs: saveData.inputs,
+      timestamp,
+    };
+
+    // Add the save to the "saves" object store
+    const tx = db.transaction("saves", "readwrite");
+    const store = tx.objectStore("saves");
+    store.add(save);
+
+    db.close();
+  } catch (error) {
+    console.error("Error adding save:", error);
+    throw new Error("Failed to add save to IndexedDB.");
+  }
+};
