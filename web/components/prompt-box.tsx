@@ -78,14 +78,14 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
 
         <div className="flex items-center justify-between text-sm">
           <div className="relative">
-            <div className="hidden flex-row gap-2 items-center sm:flex">
+            <div className="flex-row gap-2 items-center">
               <div
-                className="flex items-center gap-2 border px-2 py-1 rounded-full cursor-pointer transition-colors border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="flex items-center border px-2 py-1 rounded-full cursor-pointer transition-colors border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={() => setIsDropupOpen(!isDropupOpen)}
               >
-                {chatbot}
+                <span className="hidden sm:flex mr-1">{chatbot}</span>
                 <svg
-                  className="w-4 h-4 ml-1 transform rotate-180" // Rotate arrow for dropup
+                  className="w-4 h-4 transform rotate-180" // Rotate arrow for dropup
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
