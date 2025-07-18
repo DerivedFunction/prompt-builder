@@ -60,10 +60,7 @@ const SavesPage: React.FC = () => {
   ) => {
     try {
       loadSaveToLocalStorage(inputs);
-      alert(
-        "Save loaded successfully! The page will now reload to apply changes."
-      );
-      window.location.reload();
+      alert("Save loaded successfully! ");
     } catch (err) {
       console.error("Failed to load save:", err);
       alert("Failed to load save.");
