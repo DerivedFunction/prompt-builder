@@ -6,15 +6,19 @@ import { addHistoryEntry } from "../data/database.ts";
 interface PromptBoxProps {
   prompt: string;
   setPrompt: (prompt: string) => void;
+  setModal: (modal: string) => void;
 }
 
-const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
+const PromptBox: React.FC<PromptBoxProps> = ({
+  prompt,
+  setPrompt,
+  setModal,
+}) => {
   const [chatbot, setChatbot] = useState<string>(() => {
     // Retrieve the chatbot from localStorage on initial load
     return localStorage.getItem("selectedChatbot") || aiList[0].name;
   });
   const [isDropupOpen, setIsDropupOpen] = useState<boolean>(false);
-  const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
 
   useEffect(() => {
     // Save the selected chatbot to localStorage whenever it changes
@@ -28,7 +32,7 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
       aiList.find((ai) => ai.name === aiName)?.needsPerm &&
       !localStorage.getItem("hidePermPopup")
     ) {
-      setIsPopupOpen(true);
+      setModal("extension");
     }
   };
 
@@ -38,6 +42,7 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
     let url = selectedAI.url;
     if (selectedAI.needsPerm) {
       url = `${selectedAI.url}?prompt=${encodeURIComponent(prompt)}`;
+      setModal("extension");
     } else {
       url = `${selectedAI.url}${encodeURIComponent(prompt)}`;
     }
@@ -45,22 +50,6 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
     await addHistoryEntry(prompt, url);
     setPrompt("");
   }
-
-  const handleDoNotShowAgain = () => {
-    localStorage.setItem("hidePermPopup", "true");
-    setIsPopupOpen(false);
-  };
-
-  const browserLinks = [
-    {
-      name: "Chrome",
-      url: "https://chromewebstore.google.com/detail/tabbed-ai-chatbot-in-new/jbpmodbjedoloelbepnpfhjoohjjkand",
-    },
-    {
-      name: "Firefox",
-      url: "https://addons.mozilla.org/en-US/firefox/addon/tabbed/",
-    },
-  ];
 
   return (
     <>
@@ -137,45 +126,6 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
           </div>
         </div>
       </form>
-      {/* Popup */}
-      {isPopupOpen && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 dark:text-gray-400 text-gray-600">
-          <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg w-80">
-            <h3 className="text-lg font-semibold mb-1">
-              Install Extension: Tabbed
-            </h3>
-            <p className="mb-4 text-sm">
-              Enable Experimental Features in the extension to enable scripting
-              for the selected AI chatbot
-            </p>
-            <div className="flex flex-col gap-2">
-              {browserLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center border px-4 py-2 rounded-full cursor-pointer transition-colors border-gray-300 dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
-                >
-                  {link.name}
-                </a>
-              ))}
-              <button
-                onClick={handleDoNotShowAgain}
-                className="flex items-center justify-center border px-4 py-2 rounded-full cursor-pointer transition-colors border-gray-300  dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                Do not show again
-              </button>
-            </div>
-            <button
-              onClick={() => setIsPopupOpen(false)}
-              className="mt-4 w-full text-center text-sm text-gray-600 dark:text-gray-400 hover:underline"
-            >
-              Close
-            </button>
-          </div>
-        </div>
-      )}
     </>
   );
 };

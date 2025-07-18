@@ -18,9 +18,11 @@ interface Block {
 }
 
 interface PromptProps {
+  prompt: string;
   setPrompt: (prompt: string) => void;
+  setModal: (modal: string) => void;
 }
-const PromptPage: React.FC<PromptProps> = ({ setPrompt }) => {
+const PromptPage: React.FC<PromptProps> = ({ prompt, setPrompt, setModal }) => {
   const [expand, setExpand] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [category, setCategory] = useState("command");
@@ -32,7 +34,10 @@ const PromptPage: React.FC<PromptProps> = ({ setPrompt }) => {
     if (storedInputs) {
       setInputs(JSON.parse(storedInputs));
     }
-  }, [category]);
+    if (category === "prompt") {
+      setModal("prompt");
+    }
+  }, [category, setModal]);
   const findCategory = (category: string) => {
     const block = (blocks as Block[]).find(
       (item) => item.category === category
@@ -163,51 +168,13 @@ const PromptPage: React.FC<PromptProps> = ({ setPrompt }) => {
     }
     return x;
   };
-
   const handleInputChange = (varName: string, value: string) => {
     setInputs((prev) => {
       const newInputs = { ...prev, [varName]: value };
       localStorage.setItem(`inputs_${category}`, JSON.stringify(newInputs));
+      setPrompt(generateAllOutputs());
       return newInputs;
     });
-  };
-
-  const generateOutput = () => {
-    const block = (blocks as Block[]).find(
-      (item) => item.category === category
-    );
-    if (!block) return "";
-
-    let hasContent = false;
-    let finalOutput = "";
-
-    block.blocks.forEach((b) => {
-      let template = b.template;
-      let blockHasContent = false;
-
-      b.options.forEach((o) => {
-        const value = inputs[o.var] || "";
-        const placeholder = `{${o.var}}`;
-        const prefix = template.slice(0, template.indexOf(placeholder));
-        const suffix = template.slice(
-          template.indexOf(placeholder) + placeholder.length
-        );
-        const cleanedPrefix = value ? prefix : prefix.replace(/\s+$/, "");
-
-        template = `${cleanedPrefix}${value}${suffix}`;
-
-        if (value) {
-          blockHasContent = true;
-          hasContent = true;
-        }
-      });
-
-      if (blockHasContent || template.trim()) {
-        finalOutput += template + "\n";
-      }
-    });
-    generateAllOutputs();
-    return hasContent ? finalOutput.trim() : "";
   };
 
   const generateAllOutputs = () => {
@@ -253,7 +220,6 @@ const PromptPage: React.FC<PromptProps> = ({ setPrompt }) => {
       }
     });
 
-    setPrompt(allOutputs.trim());
     return allOutputs.trim();
   };
   return (
@@ -282,7 +248,7 @@ const PromptPage: React.FC<PromptProps> = ({ setPrompt }) => {
         setCategory={setCategory}
         category={category}
         setInputs={setInputs}
-        prompt={generateAllOutputs()}
+        prompt={prompt}
       />
       <div className="flex flex-col md:flex-row items-center gap-4 mb-2">
         <h1 className="text-2xl font-bold align-center flex-3">
@@ -297,16 +263,7 @@ const PromptPage: React.FC<PromptProps> = ({ setPrompt }) => {
         ></input>
       </div>
 
-      <div className="flex flex-col gap-5">
-        <div className="flex flex-col gap-0.5 w-full sm:flex-row">
-          <div className="flex-1 p-4 min-h-[200px]">
-            {findCategory(category)}
-          </div>
-          <div className="hidden flex-1 p-4 border-1 border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 rounded-md h-[530px] overflow-auto">
-            <p className="whitespace-pre-wrap">{generateOutput()}</p>
-          </div>
-        </div>
-      </div>
+      <div className="p-4 min-h-[200px]">{findCategory(category)}</div>
     </div>
   );
 };
