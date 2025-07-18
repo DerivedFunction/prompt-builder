@@ -170,7 +170,9 @@ import { saveDataFromLocalStorage } from "../data/database";
               expand={expand}
               onClick={() => {
                 setExpand(false);
-                saveDataFromLocalStorage();
+                const input = document.getElementById("save_name") as HTMLInputElement;
+                const saveName = input.value;
+                saveDataFromLocalStorage(saveName);
                 setCategory(category);
               }}
             />

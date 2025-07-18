@@ -297,6 +297,7 @@ const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
           Prompt Builder Playground
         </h1>
         <input
+          id="save_name"
           type="text"
           className="flex-1 p-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Save Name"

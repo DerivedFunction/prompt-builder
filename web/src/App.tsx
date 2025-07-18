@@ -26,9 +26,6 @@ function App() {
     case "saves":
       mainPage = <SavePage />;
       break;
-    case "settings":
-      mainPage = <div>Settings Page</div>;
-      break;
     default:
       mainPage = <HomePage />;
       break;

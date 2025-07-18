@@ -43,7 +43,7 @@ export async function deleteHistoryEntry(id: number) {
 // --- Saves Functions ---
 
 // Function to save data from localStorage to IndexedDB
-export async function saveDataFromLocalStorage() {
+export async function saveDataFromLocalStorage(name: string) {
   const prefix = "inputs_"; // Prefix for input keys in localStorage
   const inputs = [];
 
@@ -65,7 +65,7 @@ export async function saveDataFromLocalStorage() {
   await db.add("saves", {
     inputs,
     timestamp: Date.now(),
-    name: `Save_${new Date().toLocaleString()}`,
+    name,
   });
 }
 

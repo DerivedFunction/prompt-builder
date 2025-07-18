@@ -5,7 +5,6 @@ import menu_open from "@/images/menu_open.svg";
 import menu from "@/images/menu.svg";
 import new_prompt from "@/images/new_prompt.svg";
 import history from "@/images/history.svg";
-import settings from "@/images/settings.svg";
 import box from "@/images/box.svg";
 import home from "@/images/home.svg";
 
@@ -103,17 +102,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               />
             </div>
           </div>
-          {/** Profile Icon on bottom */}
-
-          <NavItem
-            image={settings}
-            text={"View Settings"}
-            expand={expand}
-            onClick={() => {
-              setExpand(false);
-              setCurrentPage("settings");
-            }}
-          />
+          
         </div>
       </div>
       {/* Overlay for mobile */}
