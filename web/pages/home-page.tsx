@@ -1,0 +1,15 @@
+import box from "@/images/box.svg";
+const HomePage: React.FC = () => {
+  return (
+      <div className="w-full">
+        <div className="flex items-center gap-3 justify-center">
+          <img src={box} alt="logo icon" className="h-16 dark:invert" />
+          <p className="text-2xl font-medium ">AI Prompt Builder</p>
+        </div>
+        <p className="text-sm mt-2 flex justify-center">
+          Build better AI prompts
+        </p>
+      </div>
+  );
+};
+export default HomePage;

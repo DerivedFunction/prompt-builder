@@ -5,6 +5,7 @@ import menu from "@/images/menu.svg";
 import PromptPage from "../pages/prompt-page";
 import HistoryPage from "../pages/history-page"
 import SavePage from "../pages/save-page"
+import HomePage from "../pages/home-page"
 import "./App.css";
 
 function App() {
@@ -29,7 +30,7 @@ function App() {
       mainPage = <div>Settings Page</div>;
       break;
     default:
-      mainPage = <div>Home Page</div>;
+      mainPage = <HomePage />;
       break;
   }
   return (

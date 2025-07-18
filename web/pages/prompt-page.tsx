@@ -292,19 +292,25 @@ const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
         setInputs={setInputs}
         prompt={generateAllOutputs()}
       />
-      <div className="flex flex-row items-center gap-4">
-        <h1 className="text-2xl font-bold align-center">
+      <div className="flex flex-row items-center gap-4 mb-2">
+        <h1 className="text-2xl font-bold align-center flex-3">
           Prompt Builder Playground
         </h1>
+        <input
+          type="text"
+          className="flex-1 p-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Save Name"
+          defaultValue={`save_${Date.now()}`}
+        ></input>
       </div>
 
       <div className="flex flex-col gap-5">
         <div className="flex flex-col gap-0.5 w-full sm:flex-row">
-          <div className="flex-1 p-4 min-h-[200px] max-h-[550px]">
-            <div className="">{findCategory(category)}</div>
+          <div className="flex-1 p-4 min-h-[200px] max-h-[530px] overflow-y-auto">
+            {findCategory(category)}
           </div>
-          <div className="flex-1 p-4 border-1 border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 rounded-md h-[550px] overflow-auto">       
-              <p className="whitespace-pre-wrap">{generateOutput()}</p>
+          <div className="flex-1 p-4 border-1 border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 rounded-md h-[530px] overflow-auto">
+            <p className="whitespace-pre-wrap">{generateOutput()}</p>
           </div>
         </div>
       </div>
