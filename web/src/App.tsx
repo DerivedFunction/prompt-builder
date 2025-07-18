@@ -59,8 +59,8 @@ function App() {
           <div className="flex justify-center p-3 overflow-y-auto">
             <div className={`w-full space-y-3 py-4`}>{mainPage}</div>
           </div>
-          <div className="pb-6 flex w-full justify-center">
-            <PromptBox prompt={prompt} setPrompt={setPrompt}/>
+          <div className="pb-6 flex flex-col items-center w-full justify-center">
+            <PromptBox prompt={prompt} setPrompt={setPrompt} />
           </div>
         </main>
       </div>
