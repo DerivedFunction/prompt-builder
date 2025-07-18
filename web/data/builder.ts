@@ -11,6 +11,7 @@ export const blocks = [
             var: "adjective",
             type: "dropdown",
             values: [
+               
               "senior",
               "junior",
               "experienced",
@@ -22,7 +23,6 @@ export const blocks = [
               "friendly",
               "formal",
               "other",
-              "none",
             ],
           },
           {
@@ -34,6 +34,7 @@ export const blocks = [
             var: "preposition",
             type: "dropdown",
             values: [
+               
               "on",
               "at",
               "for",
@@ -45,7 +46,6 @@ export const blocks = [
               "working with",
               "working on",
               "focused on",
-              "other"
             ],
           },
           {
@@ -71,6 +71,7 @@ export const blocks = [
             var: "action",
             type: "dropdown",
             values: [
+               
               "do",
               "explain",
               "create",
@@ -100,7 +101,6 @@ export const blocks = [
               "integrate",
               "prioritize",
               "fill in the blanks",
-              "other",
             ],
           },
           {
@@ -109,6 +109,108 @@ export const blocks = [
             values: [
               "Provide details or instructions (e.g., a 500-word essay)",
             ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    category: "code",
+    label: "Main Action",
+    blocks: [
+      {
+        type: "block",
+        template:
+          "Your task is to {action} for a {type} in {language}. {details}",
+        options: [
+          {
+            var: "action",
+            type: "dropdown",
+            values: [
+               
+              "code",
+              "debug code",
+              "refactor code",
+              "finish implementing",
+              "fix and explain errors",
+              "explain this error message",
+              "generate code documentation",
+              "optimize and refactor code",
+              "generate code tests",
+              "review this code",
+              "generate data",
+              "comment",
+              "validate code",
+              "deploy",
+              "scrape",
+              "simulate",
+              "format code",
+            ],
+          },
+          {
+            var: "type",
+            type: "dropdown",
+            values: [
+              "Function",
+              "Class",
+              "Module",
+              "Script",
+              "Web App",
+              "API",
+              "Component",
+              "Library",
+              "Database",
+              "Model",
+              "Bot",
+              "CLI",
+              "Plugin",
+              "Template",
+              "Service",
+              "Project",
+              "Game",
+            ],
+          },
+          {
+            var: "language",
+            type: "dropdown",
+            values: [
+               
+              "Python",
+              "JavaScript",
+              "Java",
+              "C",
+              "C++",
+              "C#",
+              "Ruby",
+              "PHP",
+              "Go",
+              "Swift",
+              "Kotlin",
+              "TypeScript",
+              "R",
+              "SQL",
+              "HTML/CSS",
+              "Rust",
+              "Bash",
+              "React",
+              "Angular",
+              "Vue",
+              "Django",
+              "Flask",
+              "Spring",
+              "Laravel",
+              "Ruby on Rails",
+              "Flutter",
+              "TensorFlow",
+              "PyTorch",
+              "Express",
+              ".NET",
+            ],
+          },
+          {
+            var: "details",
+            type: "text_input",
+            values: ["Provide additional details"],
           },
         ],
       },
