@@ -6,6 +6,7 @@ import erase from "@/images/erase.svg";
 
 interface Block {
   category: string;
+  newLine: boolean;
   blocks: Array<{
     template: string;
     options: Array<{
@@ -19,7 +20,7 @@ interface Block {
 interface PromptProps {
   setPrompt: (prompt: string) => void;
 }
-const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
+const PromptPage: React.FC<PromptProps> = ({ setPrompt }) => {
   const [expand, setExpand] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [category, setCategory] = useState("command");
@@ -146,7 +147,7 @@ const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
             placeholder={values[0]}
             value={inputs[varName] || ""}
             onChange={(e) => {
-              handleInputChange(varName, e.target.value)
+              handleInputChange(varName, e.target.value);
               // auto adjust height as needed
               e.target.style.height = "auto";
               e.target.style.height = `${e.target.scrollHeight}px`;
@@ -248,7 +249,7 @@ const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
       });
 
       if (hasContent) {
-        allOutputs += ` ${categoryOutput.trim()}`;
+        allOutputs += `${block.newLine ? "\n" : " "}${categoryOutput.trim()}`;
       }
     });
 

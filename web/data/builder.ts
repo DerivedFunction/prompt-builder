@@ -1,6 +1,7 @@
 export const blocks = [
   {
     category: "roleplay",
+    newLine: false,
     blocks: [
       {
         template: "You are a/an {adjective} {noun} {preposition} {topic}",
@@ -66,6 +67,7 @@ export const blocks = [
   },
   {
     category: "command",
+    newLine: false,
     blocks: [
       {
         template: "Your task is to {action} {details}",
@@ -118,6 +120,7 @@ export const blocks = [
   },
   {
     category: "code",
+    newLine: false,
     blocks: [
       {
         template:
@@ -223,6 +226,7 @@ export const blocks = [
   },
   {
     category: "style",
+    newLine: false,
     blocks: [
       {
         template: "Ensure the response is {tone_style} and in {format}",
@@ -252,7 +256,7 @@ export const blocks = [
           },
           {
             var: "format",
-            type: "text_input",
+            type: "textarea",
             values: ["paragraphs, sentences, code, etc"],
           },
         ],
@@ -261,7 +265,7 @@ export const blocks = [
   },
   {
     category: "rules",
-
+    newLine: true,
     blocks: [
       {
         template: "Rules: {rules}",
@@ -269,7 +273,9 @@ export const blocks = [
           {
             var: "rules",
             type: "textarea",
-            values: ["1. Create an outline step by step first... \n2. Include this and exclude that... "],
+            values: [
+              "1. Create an outline step by step first... \n2. Include this and exclude that... ",
+            ],
           },
         ],
       },
@@ -277,6 +283,7 @@ export const blocks = [
   },
   {
     category: "define",
+    newLine: true,
     blocks: [
       {
         template: "Refer to these definitions: {definitions} ",
@@ -292,6 +299,7 @@ export const blocks = [
   },
   {
     category: "example",
+    newLine: true,
     blocks: [
       {
         template: "Examples: {examples} ",
@@ -307,7 +315,7 @@ export const blocks = [
   },
   {
     category: "input",
-
+    newLine: true,
     blocks: [
       {
         template: "{other} ",
