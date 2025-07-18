@@ -5,11 +5,12 @@ import menu_open from "@/images/menu_open.svg";
 import menu from "@/images/menu.svg";
 import command from "@/images/categories/command.svg";
 import style from "@/images/categories/style.svg";
-import format from "@/images/categories/format.svg";
 import roleplay from "@/images/categories/roleplay.svg";
-import input from "@/images/categories/input.svg";
-import code from "@/images/categories/code.svg";
+import define from "@/images/categories/definition.svg";
 import rules from "@/images/categories/rules.svg";
+import text from "@/images/categories/text.svg";
+import code from "@/images/categories/code.svg";
+
 interface SidebarProps {
   expand: boolean;
   setExpand: (expand: boolean) => void;
@@ -85,21 +86,22 @@ const BuilderSidebar: React.FC<SidebarProps> = ({
                 }}
               />
               <NavItem
+                image={code}
+                text={"Code Action"}
+                expand={expand}
+                onClick={() => {
+                  setExpand(false);
+                  setCategory("code");
+                }}
+              />
+
+              <NavItem
                 image={style}
                 text={"Style"}
                 expand={expand}
                 onClick={() => {
                   setExpand(false);
                   setCategory("style");
-                }}
-              />
-              <NavItem
-                image={format}
-                text={"Format"}
-                expand={expand}
-                onClick={() => {
-                  setExpand(false);
-                  setCategory("format");
                 }}
               />
               <NavItem
@@ -113,17 +115,17 @@ const BuilderSidebar: React.FC<SidebarProps> = ({
               />
 
               <NavItem
-                image={code}
-                text={"Code"}
+                image={define}
+                text={"Definitions"}
                 expand={expand}
                 onClick={() => {
                   setExpand(false);
-                  setCategory("code");
+                  setCategory("define");
                 }}
               />
               <NavItem
-                image={input}
-                text={"Variables"}
+                image={text}
+                text={"Input"}
                 expand={expand}
                 onClick={() => {
                   setExpand(false);
