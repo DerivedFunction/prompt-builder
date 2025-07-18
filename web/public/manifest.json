@@ -7,10 +7,17 @@
       "sizes": "512x512",
       "type": "image/svg+xml",
       "purpose": "any"
-    }
+    },
+     {
+       "src": "icon.png",
+       "sizes": "128x128",
+       "type": "image/png",
+       "purpose": "any"
+     }
   ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#171717",
-  "background_color": "#ffffff"
+  "background_color": "#ffffff",
+  "id": "https://prompt-builder-five.vercel.app/assets/"
 }
