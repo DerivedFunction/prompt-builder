@@ -56,7 +56,7 @@ function App() {
             expand ? `md:ml-64` : "md:ml-12 md:mr-12"
           }`}
         >
-          <div className="flex justify-center p-3 overflow-y-clip max-h-[75vh]">
+          <div className="flex justify-center p-3 overflow-y-auto">
             <div className={`w-full space-y-3 py-4`}>{mainPage}</div>
           </div>
           <div className="pb-6 flex w-full justify-center">

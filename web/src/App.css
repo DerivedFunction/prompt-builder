@@ -3,70 +3,57 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --scrollbar-width: 1px; /* Super thin scrollbar */
+  --scrollbar-track: #d1d5db; /* gray-300 */
+  --scrollbar-thumb: #6b7280; /* gray-500 */
+  --scrollbar-thumb-hover: #4b5563; /* gray-600 */
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans, "Arial", "Helvetica", sans-serif);
+  --font-mono: var(--font-geist-mono, "monospace");
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    /* Softer dark background and slightly dimmed foreground */
     --background: #121212;
     --foreground: #f0f0f0;
+    --scrollbar-track: #374151; /* gray-700 */
+    --scrollbar-thumb: #6b7280; /* gray-500 */
+    --scrollbar-thumb-hover: #4b5563; /* gray-600 */
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
 }
 
 /* WebKit Scrollbar Styles */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: var(--scrollbar-width);
+  height: var(--scrollbar-width);
 }
 
 ::-webkit-scrollbar-track {
-  background: #d1d5db; /* gray-300 */
-  border-radius: 4px;
+  background: var(--scrollbar-track);
+  border-radius: var(--scrollbar-width);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #6b7280; /* gray-500 */
-  border-radius: 4px;
+  background: var(--scrollbar-thumb);
+  border-radius: var(--scrollbar-width);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #4b5563; /* gray-600 */
+  background: var(--scrollbar-thumb-hover);
 }
 
 /* Firefox Scrollbar Styles */
 html {
-  scrollbar-color: #6b7280 #d1d5db; /* thumb: gray-500, track: gray-300 */
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
   scrollbar-width: thin;
-}
-
-/* Dark Mode Scrollbar Styles */
-@media (prefers-color-scheme: dark) {
-  ::-webkit-scrollbar-track {
-    background: #374151; /* gray-700 */
-  }
-
-  ::-webkit-scrollbar-thumb {
-    background: #6b7280; /* gray-500 */
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    background: #4b5563; /* gray-600 */
-  }
-
-  html {
-    scrollbar-color: #6b7280 #374151; /* thumb: gray-500, track: gray-700 */
-  }
 }

@@ -152,6 +152,7 @@ export const blocks = [
             type: "dropdown",
             values: [
               "Function",
+              "File",
               "Class",
               "Module",
               "Script",
