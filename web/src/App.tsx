@@ -4,6 +4,7 @@ import PromptBox from "../components/prompt-box";
 import menu from "@/images/menu.svg";
 import PromptPage from "../pages/prompt-page";
 import HistoryPage from "../pages/history-page"
+import SavePage from "../pages/save-page"
 import "./App.css";
 
 function App() {
@@ -20,6 +21,9 @@ function App() {
       break;
     case "history":
       mainPage = <HistoryPage />;
+      break;
+    case "saves":
+      mainPage = <SavePage />;
       break;
     case "settings":
       mainPage = <div>Settings Page</div>;

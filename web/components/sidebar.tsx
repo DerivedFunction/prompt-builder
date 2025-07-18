@@ -6,6 +6,10 @@ import menu from "@/images/menu.svg";
 import new_prompt from "@/images/new_prompt.svg";
 import history from "@/images/history.svg";
 import settings from "@/images/settings.svg";
+import box from "@/images/box.svg";
+import home from "@/images/home.svg";
+
+
 interface SidebarProps {
   expand: boolean;
   setExpand: (expand: boolean) => void;
@@ -62,6 +66,15 @@ const Sidebar: React.FC<SidebarProps> = ({
           <div className="pt-10 h-full flex flex-col justify-between">
             <div className="">
               <NavItem
+                image={home}
+                text={"Home"}
+                expand={expand}
+                onClick={() => {
+                  setExpand(false);
+                  setCurrentPage("home");
+                }}
+              />
+              <NavItem
                 image={new_prompt}
                 text={"Prompt Builder"}
                 expand={expand}
@@ -77,6 +90,15 @@ const Sidebar: React.FC<SidebarProps> = ({
                 onClick={() => {
                   setExpand(false);
                   setCurrentPage("history");
+                }}
+              />
+              <NavItem
+                image={box}
+                text={"View Saved Prompts"}
+                expand={expand}
+                onClick={() => {
+                  setExpand(false);
+                  setCurrentPage("saves");
                 }}
               />
             </div>

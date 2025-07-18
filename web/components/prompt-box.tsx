@@ -1,7 +1,7 @@
 import { useState } from "react";
 import send from "@/images/send.svg";
 import { aiList } from "../data/ai-list.ts";
-import { addHistoryEntry } from "../data/history.ts";
+import { addHistoryEntry } from "../data/database.ts";
 interface PromptBoxProps {
   prompt: string;
   setPrompt: (prompt: string) => void;

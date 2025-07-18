@@ -14,6 +14,7 @@
   import erase from "@/images/erase.svg";
   import copy from "@/images/copy.svg";
   import save from "@/images/save.svg";
+import { saveDataFromLocalStorage } from "../data/database";
 
   interface SidebarProps {
     expand: boolean;
@@ -169,6 +170,7 @@
               expand={expand}
               onClick={() => {
                 setExpand(false);
+                saveDataFromLocalStorage();
                 setCategory(category);
               }}
             />

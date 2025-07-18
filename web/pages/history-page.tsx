@@ -5,7 +5,7 @@ import {
   getHistory,
   deleteAllHistory,
   deleteHistoryEntry,
-} from "../data/history";
+} from "../data/database";
 
 interface HistoryEntry {
   id: number;
