@@ -52,6 +52,7 @@ export const blocks = [
               "working with",
               "working on",
               "focused on",
+              "named",
             ],
           },
           {
@@ -81,6 +82,7 @@ export const blocks = [
               "create",
               "analyze",
               "fact check",
+              "assist",
               "write",
               "design",
               "solve",
@@ -173,6 +175,7 @@ export const blocks = [
               "Bot",
               "CLI",
               "Plugin",
+              "Extension",
               "Template",
               "Service",
               "Project",
