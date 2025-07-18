@@ -2,7 +2,7 @@ import { useState } from "react";
 import BuilderSidebar from "../components/builder-sidebar";
 import menu from "@/images/menu.svg";
 import { blocks } from "../data/builder";
-
+import forward from "@/images/forward.svg";
 // Define the type for blocks to ensure TypeScript compatibility
 interface Block {
   category: string;
@@ -45,9 +45,23 @@ const PromptPage = () => {
       return (
         <div
           key={b.type}
-          className="p-3 border-2 border-gray-300 rounded-md mb-2 bg-white dark:bg-gray-800 dark:border-gray-600"
+          className="p-3 border-2 border-gray-300 rounded-md mb-2 bg-white dark:bg-gray-800 dark:border-gray-600 flex flex-col gap-3 text-lg"
         >
           {parsedTemplate}
+          <div>
+            <button
+              onClick={() => {}}
+              className={`p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700`}
+            >
+              <img
+                className="w-3.5 aspect-square dark:invert"
+                src={forward}
+                alt=""
+                height={20}
+                width={20}
+              />
+            </button>
+          </div>
         </div>
       );
     });
@@ -153,11 +167,11 @@ const PromptPage = () => {
         <div className="flex flex-col gap-5 w-full sm:flex-row">
           {/* Left Box */}
           <div className="flex-1 p-4 border-2 border-gray-300 rounded-md min-h-[200px]">
-            <p className="text-gray-700">{findCategory(category)}</p>
+            <div className="">{findCategory(category)}</div>
           </div>
           {/* Right Box */}
           <div className="flex-1 p-4 border-2 border-gray-300 rounded-md min-h-[200px]">
-            <p className="text-gray-700">Output (not implemented)</p>
+            <div className="text-gray-700">Output (not implemented)</div>
           </div>
         </div>
       </div>
