@@ -78,7 +78,7 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
 
         <div className="flex items-center justify-between text-sm">
           <div className="relative">
-            <div className="flex flex-row gap-2 items-center">
+            <div className="hidden flex-row gap-2 items-center sm:flex">
               <div
                 className="flex items-center gap-2 border px-2 py-1 rounded-full cursor-pointer transition-colors border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={() => setIsDropupOpen(!isDropupOpen)}
