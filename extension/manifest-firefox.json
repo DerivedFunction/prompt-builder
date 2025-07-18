@@ -13,10 +13,14 @@
       "48": "icon48.png"
     }
   },
-  "background": { "service_worker": "background.js"},
-  "side_panel": {
+  "background": { "scripts": ["background.js"]},
+  "sidebar_action": {
     "default_path": "index.html",
-    "default_title": "Prompt Builder"
-  },
-  "permissions": ["sidePanel"]
+    "default_title": "Prompt Builder",
+    "default_icon": {
+      "32": "icon32.png",
+      "48": "icon48.png"
+    },
+    "open_at_install": true
+  }
 }

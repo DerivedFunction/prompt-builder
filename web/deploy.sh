@@ -7,4 +7,6 @@ cp -r dist/* ../chrome
 cp -r dist/* ../firefox
 cp ../extension/* ../chrome
 cp ../extension/* ../firefox
+rm ../chrome/manifest-firefox.json
+mv ../firefox/manifest-firefox.json ../firefox/manifest.json
 

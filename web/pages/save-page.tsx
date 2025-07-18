@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import copy from "@/images/copy.svg"; // This icon will be used for "Load"
+import load from "@/images/menu_open.svg"; // This icon will be used for "Load"
 import erase from "@/images/erase.svg";
 import {
   getSaves,
@@ -58,22 +58,24 @@ const SavesPage: React.FC = () => {
   };
 
   return (
-    <div className="flex flex-col h-full w-full text-gray-900 dark:text-gray-100">
-      <div className="flex-1 p-4 border-2 border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600">
+    <div className="h-full w-full text-gray-900 dark:text-gray-100">
+      <div className="p-4 border-2 border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600">
         <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
-          Saved States
+          Saved Prompts
         </h1>
 
         {/* Saves Table */}
-        <div className="flex flex-col gap-2">
+        <div className="gap-2">
           {saves.length > 0 ? (
-            <div className="overflow-x-auto">
+            <div className="overflow-x-scroll">
               <table className="w-full border-2 border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600">
                 <thead>
                   <tr className="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 font-bold">
-                    <th className="p-3 text-left w-[20%]">Timestamp</th>
-                    <th className="p-3 text-left w-[60%]">Save Name</th>
-                    <th className="p-3 text-center w-[12%]">
+                    <th className="p-3 text-left w-[10%]">Timestamp</th>
+                    <th className="p-3 text-left min-w-[200px] w-[70%]">
+                      Save Name
+                    </th>
+                    <th className="p-3 text-center min-w-[100px]">
                       <button
                         onClick={handleClearAll}
                         className="p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -107,8 +109,8 @@ const SavesPage: React.FC = () => {
                           title="Load this save"
                         >
                           <img
-                            className="w-3.5 aspect-square dark:invert"
-                            src={copy}
+                            className="w-3.5 aspect-square dark:invert rotate-90"
+                            src={load}
                             alt="Load Save"
                             height={20}
                             width={20}
@@ -135,7 +137,8 @@ const SavesPage: React.FC = () => {
             </div>
           ) : (
             <p className="text-gray-700 dark:text-gray-300 text-center">
-              No saved states found.
+              No saved prompts found. Click on the save button on the left
+              sidebar to save a prompt.
             </p>
           )}
         </div>

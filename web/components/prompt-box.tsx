@@ -1,17 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import send from "@/images/send.svg";
 import { aiList } from "../data/ai-list.ts";
 import { addHistoryEntry } from "../data/database.ts";
+
 interface PromptBoxProps {
   prompt: string;
   setPrompt: (prompt: string) => void;
 }
 
-
 const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
-  const [chatbot, setChatbot] = useState<string>(aiList[0].name); // Default to the first AI provider
+  const [chatbot, setChatbot] = useState<string>(() => {
+    // Retrieve the chatbot from localStorage on initial load
+    return localStorage.getItem("selectedChatbot") || aiList[0].name;
+  });
   const [isDropupOpen, setIsDropupOpen] = useState<boolean>(false);
   const [isPopupOpen, setIsPopupOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Save the selected chatbot to localStorage whenever it changes
+    localStorage.setItem("selectedChatbot", chatbot);
+  }, [chatbot]);
 
   const handleChatbotChange = (aiName: string) => {
     setChatbot(aiName);
@@ -35,8 +43,9 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
     }
     window.open(url, "_blank"); // Open the URL in a new tab
     await addHistoryEntry(prompt, url);
-    setPrompt("")
-  };
+    setPrompt("");
+  }
+
   const handleDoNotShowAgain = () => {
     localStorage.setItem("hidePermPopup", "true");
     setIsPopupOpen(false);
@@ -52,6 +61,7 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
       url: "https://addons.mozilla.org/en-US/firefox/addon/tabbed/",
     },
   ];
+
   return (
     <>
       <form
@@ -108,14 +118,13 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
 
           <div className="flex items-center gap-2">
             <button
-              className={`rounded-full p-2 transition-colors ${prompt.length > 0
-                ? "bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-600 dark:text-gray-400"
-                }`}
+              className={`rounded-full p-2 transition-colors ${
+                prompt.length > 0
+                  ? "bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600"
+                  : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-600 dark:text-gray-400"
+              }`}
               disabled={prompt.length === 0}
-              onClick={() =>              
-                handleSendClick()
-              }
+              onClick={() => handleSendClick()}
             >
               <img
                 className="w-3.5 aspect-square dark:invert"
