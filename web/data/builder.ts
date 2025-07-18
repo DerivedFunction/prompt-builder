@@ -45,6 +45,7 @@ export const blocks = [
               "working with",
               "working on",
               "focused on",
+              "other"
             ],
           },
           {
