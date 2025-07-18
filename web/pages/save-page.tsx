@@ -16,6 +16,18 @@ interface SaveEntry {
   timestamp: number;
   inputs: { type: string; data: Record<string, string> }[];
 }
+interface Block {
+  category: string;
+  newLine: boolean;
+  blocks: Array<{
+    template: string;
+    options: Array<{
+      var: string;
+      type: string;
+      values: Array<string>;
+    }>;
+  }>;
+}
 const SavesPage: React.FC = () => {
   const [saves, setSaves] = useState<SaveEntry[]>([]);
 
@@ -82,38 +94,60 @@ const SavesPage: React.FC = () => {
 
     saveData.forEach((save, index) => {
       const prompts: string[] = [];
+
+      // Map category => inputs for quick lookup
+      const inputMap: Record<string, Record<string, string>> = {};
       save.inputs.forEach((input) => {
         const categoryName = input.type.replace("inputs_", "");
-        const block = blocks.find((b) => b.category === categoryName);
-        if (!block) return;
+        inputMap[categoryName] = input.data;
+      });
+
+      // Respect block order
+      (blocks as Block[]).forEach((block) => {
+        const categoryInputs = inputMap[block.category] || {};
+        let categoryOutput = "";
+        let hasContent = false;
 
         block.blocks.forEach((b) => {
-          let prompt = b.template;
-          let hasContent = false;
+          let template = b.template;
+          let blockHasContent = false;
 
           b.options.forEach((option) => {
-            const value = input.data[option.var] || "";
+            const value = categoryInputs[option.var] || "";
             const placeholder = `{${option.var}}`;
-            const prefix = prompt.slice(0, prompt.indexOf(placeholder));
-            const suffix = prompt.slice(
-              prompt.indexOf(placeholder) + placeholder.length
-            );
-            const cleanedPrefix = value ? prefix : prefix.replace(/\s+$/, "");
-            prompt = `${cleanedPrefix}${value}${suffix}`;
-            if (value) hasContent = true;
+
+            if (template.includes(placeholder)) {
+              const prefix = template.slice(0, template.indexOf(placeholder));
+              const suffix = template.slice(
+                template.indexOf(placeholder) + placeholder.length
+              );
+              const cleanedPrefix = value ? prefix : prefix.replace(/\s+$/, "");
+              template = `${cleanedPrefix}${value}${suffix}`;
+            }
+
+            if (value) {
+              blockHasContent = true;
+              hasContent = true;
+            }
           });
 
-          if (hasContent || prompt.trim()) {
-            prompts.push(prompt);
+          if (blockHasContent || template.trim()) {
+            // Append template and correct trailing character
+            categoryOutput += template + (block.newLine ? "\n" : " ");
+            console.log(categoryOutput);
           }
         });
+
+        if (hasContent) {
+          prompts.push(categoryOutput);
+        }
       });
 
       if (prompts.length > 0) {
         results.push(
           `SAVE #${index + 1} - ${save.name} (${new Date(
             save.timestamp
-          ).toLocaleString()})\n${prompts.join("\n")}\n`
+          ).toLocaleString()})\n${prompts.join("")}\n`
         );
       }
     });
