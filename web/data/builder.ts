@@ -3,7 +3,7 @@ export const blocks = [
     category: "roleplay",
     blocks: [
       {
-        template: "You are a/an {adjective} {noun} {preposition} {topic}.",
+        template: "You are a/an {adjective} {noun} {preposition} {topic}",
         options: [
           {
             var: "adjective",
@@ -68,7 +68,7 @@ export const blocks = [
     category: "command",
     blocks: [
       {
-        template: "Your task is to {action} {details}.",
+        template: "Your task is to {action} {details}",
         options: [
           {
             var: "action",
@@ -121,7 +121,7 @@ export const blocks = [
     blocks: [
       {
         template:
-          "Your task is to {code_action} for a {code_type} in {language}. {code_details}",
+          "Your task is to {code_action} for a {code_type} in {language}: {code_details}",
         options: [
           {
             var: "code_action",

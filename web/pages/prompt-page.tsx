@@ -19,7 +19,7 @@ interface Block {
 interface PromptProps {
   setPrompt: (prompt: string) => void;
 }
-const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
+const PromptPage: React.FC<PromptProps> = () => {
   const [expand, setExpand] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [category, setCategory] = useState("command");
@@ -243,17 +243,11 @@ const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
         setCategory={setCategory}
         category={category}
         setInputs={setInputs}
+        prompt={generateAllOutputs()}
       />
       <div className="flex flex-row items-center gap-4 ">
         <h1 className="text-2xl font-bold align-center">Prompt Builder Playground</h1>
-        <button
-          onClick={() => setPrompt(generateAllOutputs())}
-          className={
-            "p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
-          }
-        >
-          Generate Final Prompt
-        </button>
+        
       </div>
 
       <div className="flex flex-col gap-5">
@@ -313,7 +307,7 @@ const generateAllOutputs = () => {
     });
 
     if (hasContent) {
-      allOutputs += `${categoryOutput.trim()}\n`;
+      allOutputs += ` ${categoryOutput.trim()}`;
     }
   });
 

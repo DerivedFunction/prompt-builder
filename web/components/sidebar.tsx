@@ -63,7 +63,7 @@ const Sidebar: React.FC<SidebarProps> = ({
             <div className="">
               <NavItem
                 image={new_prompt}
-                text={"New Prompt"}
+                text={"Prompt Builder"}
                 expand={expand}
                 onClick={() => {
                   setExpand(false);

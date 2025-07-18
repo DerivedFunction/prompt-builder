@@ -12,7 +12,8 @@ import text from "@/images/categories/text.svg";
 import code from "@/images/categories/code.svg";
 import input from "@/images/categories/input.svg"
 import erase from "@/images/erase.svg";
-
+import copy from "@/images/copy.svg";
+import save from "@/images/save.svg";
 
 interface SidebarProps {
   expand: boolean;
@@ -22,6 +23,7 @@ interface SidebarProps {
   setCategory: (category: string) => void;
   category: string;
   setInputs: (inputs: Record<string, string>) => void;
+  prompt: string;
 }
 
 const BuilderSidebar: React.FC<SidebarProps> = ({
@@ -30,7 +32,9 @@ const BuilderSidebar: React.FC<SidebarProps> = ({
   isHovered,
   setIsHovered,
   setCategory,
-  setInputs
+  setInputs,
+  category,
+  prompt,
 }) => {
   return (
     <>
@@ -149,6 +153,26 @@ const BuilderSidebar: React.FC<SidebarProps> = ({
             </div>
           </div>
           <NavItem
+            image={copy}
+            text={"Copy to Clipboard"}
+            expand={expand}
+            onClick={() => {
+              navigator.clipboard.writeText(prompt);
+              setExpand(false);
+              setCategory(category);
+              
+            }}
+          />
+          <NavItem
+            image={save}
+            text={"New Save"}
+            expand={expand}
+            onClick={() => {
+              setExpand(false);
+              setCategory(category);
+            }}
+          />
+          <NavItem
             image={erase}
             text={"Clear All"}
             expand={expand}
@@ -161,7 +185,7 @@ const BuilderSidebar: React.FC<SidebarProps> = ({
               keys.forEach((key) => localStorage.removeItem(key));
               setCategory("clear");
               setInputs({});
-              setCategory("roleplay")
+              setCategory("roleplay");
             }}
           />
         </div>
