@@ -140,3 +140,4 @@ vite.config.ts.timestamp-*
 
 chrome
 firefox
+*.zip

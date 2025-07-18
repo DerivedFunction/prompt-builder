@@ -224,7 +224,7 @@ export const blocks = [
     category: "style",
     blocks: [
       {
-        template: "Ensure the response is {tone_style} and in {format}.",
+        template: "Ensure the response is {tone_style} and in {format}",
         options: [
           {
             var: "tone_style",
