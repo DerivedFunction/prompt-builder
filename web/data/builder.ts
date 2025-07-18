@@ -121,7 +121,7 @@ export const blocks = [
     blocks: [
       {
         template:
-          "Your task is to {code_action} for a {code_type} in {language}: {code_details}",
+          "Your task is to {code_action} for a/an {code_type} in {language}: {code_details}",
         options: [
           {
             var: "code_action",
@@ -140,8 +140,8 @@ export const blocks = [
               "generate data",
               "comment",
               "validate code",
-              "train an AI model",
-              "deploy an AI model",
+              "train",
+              "deploy",
               "scrape",
               "simulate",
               "format code",
@@ -157,6 +157,11 @@ export const blocks = [
               "Script",
               "Web App",
               "API",
+              "AI model",
+              "LLM",
+              "Database",
+              "Library",
+              "Framework",
               "Component",
               "Library",
               "Database",
@@ -262,8 +267,8 @@ export const blocks = [
         options: [
           {
             var: "rules",
-            type: "text_input",
-            values: ["Include this and exclude that... "],
+            type: "textarea",
+            values: ["1. Create an outline step by step first... \n2. Include this and exclude that... "],
           },
         ],
       },

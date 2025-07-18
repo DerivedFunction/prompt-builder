@@ -3,6 +3,7 @@ import Sidebar from "../components/sidebar";
 import PromptBox from "../components/prompt-box";
 import menu from "@/images/menu.svg";
 import PromptPage from "../pages/prompt-page";
+import HistoryPage from "../pages/history-page"
 import "./App.css";
 
 function App() {
@@ -18,7 +19,7 @@ function App() {
       mainPage = <PromptPage setPrompt={setPrompt} />;
       break;
     case "history":
-      mainPage = <div>History Page</div>;
+      mainPage = <HistoryPage />;
       break;
     case "settings":
       mainPage = <div>Settings Page</div>;

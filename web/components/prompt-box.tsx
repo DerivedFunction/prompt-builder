@@ -24,7 +24,7 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
     }
   };
 
-  const handleSendClick = () => {
+  async function handleSendClick() {
     const selectedAI = aiList.find((ai) => ai.name === chatbot);
     if (!selectedAI) return;
     let url = selectedAI.url;
@@ -33,8 +33,9 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
     } else {
       url = `${selectedAI.url}${encodeURIComponent(prompt)}`;
     }
-    console.log(url)
     window.open(url, "_blank"); // Open the URL in a new tab
+    await addHistoryEntry(prompt, url);
+    setPrompt("")
   };
   const handleDoNotShowAgain = () => {
     localStorage.setItem("hidePermPopup", "true");
@@ -112,14 +113,9 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
                 : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-600 dark:text-gray-400"
                 }`}
               disabled={prompt.length === 0}
-              onClick={async () => {
-                
-                await addHistoryEntry(prompt);
-                setPrompt("")
-                handleSendClick();
-                
-                
-              }}
+              onClick={() =>              
+                handleSendClick()
+              }
             >
               <img
                 className="w-3.5 aspect-square dark:invert"

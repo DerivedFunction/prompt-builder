@@ -1,4 +1,4 @@
-import {openDB} from "idb";
+import { openDB } from "idb";
 
 export async function getDB() {
   return openDB("history-db", 1, {
@@ -10,9 +10,9 @@ export async function getDB() {
   });
 }
 
-export async function addHistoryEntry(prompt: string) {
+export async function addHistoryEntry(prompt: string, url: string) {
   const db = await getDB();
-  await db.add("history", { prompt, timestamp: Date.now() });
+  await db.add("history", { prompt, timestamp: Date.now(),url });
 }
 
 export async function getHistory() {
@@ -25,8 +25,12 @@ export async function deleteAllHistory() {
   await db.clear("history");
 }
 
-// delete one entry by timestamp
-export async function deleteHistoryEntry(timestamp: number) {
+export async function deleteHistoryEntry(id: number) {
   const db = await getDB();
-  await db.delete("history", timestamp);
+  try {
+    await db.delete("history", id);
+  } catch (error) {
+    console.error("Error deleting history entry:", error);
+    throw new Error(`Failed to delete entry with id ${id}`);
+  }
 }

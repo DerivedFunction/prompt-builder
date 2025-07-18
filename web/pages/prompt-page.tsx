@@ -61,7 +61,7 @@ const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
       return (
         <div
           key={b.template}
-          className="p-3 border-2 border-gray-300 rounded-md mb-2 bg-white dark:bg-gray-800 dark:border-gray-600 flex flex-col gap-3 text-lg"
+          className="p-3 border-2 border-gray-300 rounded-md mb-2 bg-white dark:bg-gray-800 dark:border-gray-600 flex flex-col gap-3 text-lg min-h-[450px] max-h-[570px]"
         >
           {parsedTemplate}
           <div>
@@ -292,20 +292,19 @@ const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
         setInputs={setInputs}
         prompt={generateAllOutputs()}
       />
-      <div className="flex flex-row items-center gap-4 ">
-        <h1 className="text-2xl font-bold align-center">Prompt Builder Playground</h1>
-        
+      <div className="flex flex-row items-center gap-4">
+        <h1 className="text-2xl font-bold align-center">
+          Prompt Builder Playground
+        </h1>
       </div>
 
       <div className="flex flex-col gap-5">
-        <div className="flex flex-col gap-5 w-full sm:flex-row">
-          <div className="flex-1 p-4 min-h-[200px]">
+        <div className="flex flex-col gap-0.5 w-full sm:flex-row">
+          <div className="flex-1 p-4 min-h-[200px] max-h-[550px]">
             <div className="">{findCategory(category)}</div>
           </div>
-          <div className="flex-1 p-4 border-2 border-gray-300 rounded-md h-[450px] overflow-auto">
-            <div className="text-gray-700 dark:text-gray-300">
-              <pre className="whitespace-pre-wrap">{generateOutput()}</pre>
-            </div>
+          <div className="flex-1 p-4 border-1 border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 rounded-md h-[550px] overflow-auto">       
+              <p className="whitespace-pre-wrap">{generateOutput()}</p>
           </div>
         </div>
       </div>
