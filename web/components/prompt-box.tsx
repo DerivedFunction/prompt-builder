@@ -1,6 +1,7 @@
 import { useState } from "react";
 import send from "@/images/send.svg";
 import { aiList } from "../data/ai-list.ts";
+import { addHistoryEntry } from "../data/history.ts";
 interface PromptBoxProps {
   prompt: string;
   setPrompt: (prompt: string) => void;
@@ -106,13 +107,19 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
 
           <div className="flex items-center gap-2">
             <button
-              className={`rounded-full p-2 transition-colors ${
-                prompt.length > 0
-                  ? "bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600"
-                  : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-600 dark:text-gray-400"
-              }`}
+              className={`rounded-full p-2 transition-colors ${prompt.length > 0
+                ? "bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600"
+                : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-600 dark:text-gray-400"
+                }`}
               disabled={prompt.length === 0}
-              onClick={handleSendClick}
+              onClick={async () => {
+                
+                await addHistoryEntry(prompt);
+                setPrompt("")
+                handleSendClick();
+                
+                
+              }}
             >
               <img
                 className="w-3.5 aspect-square dark:invert"

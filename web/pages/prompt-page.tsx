@@ -19,7 +19,7 @@ interface Block {
 interface PromptProps {
   setPrompt: (prompt: string) => void;
 }
-const PromptPage: React.FC<PromptProps> = () => {
+const PromptPage: React.FC<PromptProps> = ({setPrompt}) => {
   const [expand, setExpand] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [category, setCategory] = useState("command");
@@ -214,8 +214,55 @@ const PromptPage: React.FC<PromptProps> = () => {
         finalOutput += template + "\n";
       }
     });
-
+    generateAllOutputs();
     return hasContent ? finalOutput.trim() : "";
+  };
+
+  const generateAllOutputs = () => {
+    let allOutputs = "";
+
+    (blocks as Block[]).forEach((block) => {
+      const category = block.category;
+      // Load inputs for the current category from local storage
+      const storedInputs = localStorage.getItem(`inputs_${category}`);
+      const categoryInputs = storedInputs ? JSON.parse(storedInputs) : {};
+
+      let hasContent = false;
+      let categoryOutput = "";
+
+      block.blocks.forEach((b) => {
+        let template = b.template;
+        let blockHasContent = false;
+
+        b.options.forEach((o) => {
+          const value = categoryInputs[o.var] || "";
+          const placeholder = `{${o.var}}`;
+          const prefix = template.slice(0, template.indexOf(placeholder));
+          const suffix = template.slice(
+            template.indexOf(placeholder) + placeholder.length
+          );
+          const cleanedPrefix = value ? prefix : prefix.replace(/\s+$/, "");
+
+          template = `${cleanedPrefix}${value}${suffix}`;
+
+          if (value) {
+            blockHasContent = true;
+            hasContent = true;
+          }
+        });
+
+        if (blockHasContent || template.trim()) {
+          categoryOutput += template + "\n";
+        }
+      });
+
+      if (hasContent) {
+        allOutputs += ` ${categoryOutput.trim()}`;
+      }
+    });
+
+    setPrompt(allOutputs.trim());
+    return allOutputs.trim();
   };
   return (
     <div className="flex flex-col h-full w-full text-gray-900 dark:text-gray-100">
@@ -267,50 +314,3 @@ const PromptPage: React.FC<PromptProps> = () => {
 };
 
 export default PromptPage;
-
-const generateAllOutputs = () => {
-  let allOutputs = "";
-
-  (blocks as Block[]).forEach((block) => {
-    const category = block.category;
-    // Load inputs for the current category from local storage
-    const storedInputs = localStorage.getItem(`inputs_${category}`);
-    const categoryInputs = storedInputs ? JSON.parse(storedInputs) : {};
-
-    let hasContent = false;
-    let categoryOutput = "";
-
-    block.blocks.forEach((b) => {
-      let template = b.template;
-      let blockHasContent = false;
-
-      b.options.forEach((o) => {
-        const value = categoryInputs[o.var] || "";
-        const placeholder = `{${o.var}}`;
-        const prefix = template.slice(0, template.indexOf(placeholder));
-        const suffix = template.slice(
-          template.indexOf(placeholder) + placeholder.length
-        );
-        const cleanedPrefix = value ? prefix : prefix.replace(/\s+$/, "");
-
-        template = `${cleanedPrefix}${value}${suffix}`;
-
-        if (value) {
-          blockHasContent = true;
-          hasContent = true;
-        }
-      });
-
-      if (blockHasContent || template.trim()) {
-        categoryOutput += template + "\n";
-      }
-    });
-
-    if (hasContent) {
-      allOutputs += ` ${categoryOutput.trim()}`;
-    }
-  });
-
-  console.log("All Category Outputs:\n", allOutputs.trim());
-  return allOutputs.trim();
-};
