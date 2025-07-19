@@ -10,11 +10,11 @@ const HomePage: React.FC = () => {
         Build better AI prompts. All in one place.
       </p>
       <br />
-      <p className="text-sm mt-2 flex justify-center">
+      <p className="text-xs mt-2 flex justify-center">
         All prompts are stored locally and generated in your browser.
       </p>
-      <p className="text-sm mt-2 flex justify-center">
-        AI-generated content can make mistakes, Check for important info.
+      <p className="text-xs mt-2 flex justify-center">
+        AI-generated content can make mistakes. Check for important info.
       </p>
     </div>
   );
