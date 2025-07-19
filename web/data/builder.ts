@@ -232,7 +232,8 @@ export const blocks = [
     newLine: false,
     blocks: [
       {
-        template: "Ensure the response is {tone_style} and in {format}",
+        template:
+          "Ensure the response is {tone_style} and in this format: {format}",
         options: [
           {
             var: "tone_style",
