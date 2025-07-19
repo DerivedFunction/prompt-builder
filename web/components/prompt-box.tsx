@@ -40,11 +40,19 @@ const PromptBox: React.FC<PromptBoxProps> = ({
     const selectedAI = aiList.find((ai) => ai.name === chatbot);
     if (!selectedAI) return;
     let url = selectedAI.url;
+    const limit = prompt.length > 8000;
     if (selectedAI.needsPerm) {
       url = `${selectedAI.url}?prompt=${encodeURIComponent(prompt)}`;
       setModal("extension");
     } else {
       url = `${selectedAI.url}${encodeURIComponent(prompt)}`;
+    }
+    if (limit) {
+      navigator.clipboard.writeText(prompt);
+      window.alert(
+        `Prompt exceeds 8000 chars. Prompt copied to clipboard. Paste the prompt in ${chatbot}`
+      );
+      url = selectedAI.home ?? `https://${new URL(selectedAI.url).hostname}`;
     }
     window.open(url, "_blank"); // Open the URL in a new tab
     await addHistoryEntry(prompt, url);
@@ -57,7 +65,7 @@ const PromptBox: React.FC<PromptBoxProps> = ({
         className={`w-full bg-white dark:bg-gray-800 p-4 rounded-3xl transition-all shadow-sm max-w-3xl mr-2 ml-2`}
       >
         <textarea
-          className="outline-none w-full resize-none overflow-hidden break-words bg-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 rounded-md p-2"
+          className="outline-none w-full resize-none overflow-y-auto break-words bg-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 rounded-md p-2"
           rows={2}
           placeholder={`Message ${chatbot}`}
           onChange={(e) => setPrompt(e.target.value)}
@@ -113,7 +121,9 @@ const PromptBox: React.FC<PromptBoxProps> = ({
                   : "bg-gray-300 text-gray-500 cursor-not-allowed dark:bg-gray-600 dark:text-gray-400"
               }`}
               disabled={prompt.length === 0}
-              onClick={() => handleSendClick()}
+              onClick={() => {
+                handleSendClick();
+              }}
             >
               <img
                 className="w-3.5 aspect-square dark:invert"
