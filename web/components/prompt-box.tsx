@@ -6,14 +6,9 @@ import { addHistoryEntry } from "../data/database.ts";
 interface PromptBoxProps {
   prompt: string;
   setPrompt: (prompt: string) => void;
-  setModal: (modal: string) => void;
 }
 
-const PromptBox: React.FC<PromptBoxProps> = ({
-  prompt,
-  setPrompt,
-  setModal,
-}) => {
+const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
   const [chatbot, setChatbot] = useState<string>(() => {
     // Retrieve the chatbot from localStorage on initial load
     return localStorage.getItem("selectedChatbot") || aiList[0].name;
@@ -28,12 +23,6 @@ const PromptBox: React.FC<PromptBoxProps> = ({
   const handleChatbotChange = (aiName: string) => {
     setChatbot(aiName);
     setIsDropupOpen(false);
-    if (
-      aiList.find((ai) => ai.name === aiName)?.needsPerm &&
-      !localStorage.getItem("hidePermPopup")
-    ) {
-      setModal("extension");
-    }
   };
 
   async function handleSendClick() {
@@ -41,16 +30,14 @@ const PromptBox: React.FC<PromptBoxProps> = ({
     if (!selectedAI) return;
     let url = selectedAI.url;
     const limit = prompt.length > 8000;
-    if (selectedAI.needsPerm) {
-      url = `${selectedAI.url}?prompt=${encodeURIComponent(prompt)}`;
-      setModal("extension");
-    } else {
-      url = `${selectedAI.url}${encodeURIComponent(prompt)}`;
-    }
-    if (limit) {
+    url = `${selectedAI.url}${encodeURIComponent(prompt)}`;
+
+    if (limit || selectedAI.needsPerm) {
       navigator.clipboard.writeText(prompt);
       window.alert(
-        `Prompt exceeds 8000 chars. Prompt copied to clipboard. Paste the prompt in ${chatbot}`
+        `${
+          selectedAI.needsPerm ? `` : `Prompt exceeds 8000 chars.`
+        } Prompt copied to clipboard. Paste the prompt in ${chatbot}`
       );
       url = selectedAI.home ?? `https://${new URL(selectedAI.url).hostname}`;
     }

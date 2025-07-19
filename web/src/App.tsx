@@ -6,7 +6,6 @@ import PromptPage from "../pages/prompt-page";
 import HistoryPage from "../pages/history-page";
 import SavePage from "../pages/save-page";
 import HomePage from "../pages/home-page";
-import ExtensionModal from "../modal/extension-modal";
 import "./App.css";
 
 function App() {
@@ -14,16 +13,12 @@ function App() {
   const [isHovered, setIsHovered] = useState(false);
   const [currentPage, setCurrentPage] = useState("home");
   const [prompt, setPrompt] = useState("");
-  const [modal, setModal] = useState("");
-
   let mainPage;
   let modalPage;
 
   switch (currentPage) {
     case "new-prompt":
-      mainPage = (
-        <PromptPage setPrompt={setPrompt} prompt={prompt} setModal={setModal} />
-      );
+      mainPage = <PromptPage setPrompt={setPrompt} prompt={prompt} />;
       break;
     case "history":
       mainPage = <HistoryPage />;
@@ -33,14 +28,6 @@ function App() {
       break;
     default:
       mainPage = <HomePage />;
-      break;
-  }
-  switch (modal) {
-    case "extension":
-      modalPage = <ExtensionModal setModal={setModal} />;
-      break;
-    default:
-      modalPage = <></>;
       break;
   }
   return (
@@ -75,11 +62,7 @@ function App() {
             <div className={`w-full space-y-3 py-4`}>{mainPage}</div>
           </div>
           <div className="pb-6 flex flex-col items-center w-full justify-center pr-2 pl-2">
-            <PromptBox
-              prompt={prompt}
-              setPrompt={setPrompt}
-              setModal={setModal}
-            />
+            <PromptBox prompt={prompt} setPrompt={setPrompt} />
           </div>
         </main>
       </div>

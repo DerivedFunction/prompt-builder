@@ -20,9 +20,8 @@ interface Block {
 interface PromptProps {
   prompt: string;
   setPrompt: (prompt: string) => void;
-  setModal: (modal: string) => void;
 }
-const PromptPage: React.FC<PromptProps> = ({ prompt, setPrompt, setModal }) => {
+const PromptPage: React.FC<PromptProps> = ({ prompt, setPrompt }) => {
   const [expand, setExpand] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [category, setCategory] = useState("command");
@@ -34,10 +33,7 @@ const PromptPage: React.FC<PromptProps> = ({ prompt, setPrompt, setModal }) => {
     if (storedInputs) {
       setInputs(JSON.parse(storedInputs));
     }
-    if (category === "prompt") {
-      setModal("prompt");
-    }
-  }, [category, setModal]);
+  }, [category]);
   const findCategory = (category: string) => {
     const block = (blocks as Block[]).find(
       (item) => item.category === category

@@ -262,7 +262,7 @@ const SavesPage: React.FC = () => {
         {/* Saves Table */}
         <div className="gap-2 text-xs">
           {saves.length > 0 ? (
-            <div className="overflow-x-scroll">
+            <div className="overflow-x-auto">
               <table className="w-full border-2 border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600">
                 <thead>
                   <tr className="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 font-bold">
