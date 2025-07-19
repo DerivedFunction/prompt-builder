@@ -27,7 +27,7 @@ export async function addHistoryEntry(prompt: string, url: string) {
 
 export async function getHistory() {
   const db = await getDB();
-  return await db.getAll("history");
+  return (await db.getAll("history")).reverse();
 }
 
 export async function deleteAllHistory() {
