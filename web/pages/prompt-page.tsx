@@ -54,7 +54,7 @@ const PromptPage: React.FC<PromptProps> = ({ prompt, setPrompt }) => {
       return (
         <div
           key={b.template}
-          className="p-2 border-2 border-gray-300 rounded-md mb-2 bg-white dark:bg-gray-800 dark:border-gray-600 flex flex-col gap-1 text-sm min-h-[400px]"
+          className="p-2 border-2 border-gray-300 rounded-md mb-2 bg-white dark:bg-gray-800 dark:border-gray-600 flex flex-col gap-1 text-sm min-h-[380px]"
         >
           {parsedTemplate}
           <div>
