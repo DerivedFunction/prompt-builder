@@ -66,13 +66,15 @@ function App() {
         {modalPage}
         <main
           className={`flex-1 transition-all duration-300 flex flex-col justify-between overflow-hidden ${
-            expand ? `md:ml-64` : "md:ml-12 md:mr-12"
+            expand
+              ? `md:ml-64`
+              : `md:ml-12 ${currentPage === "new-prompt" ? "md:mr-12" : ""}`
           }`}
         >
           <div className="flex justify-center p-3 overflow-y-auto">
             <div className={`w-full space-y-3 py-4`}>{mainPage}</div>
           </div>
-          <div className="pb-6 flex flex-col items-center w-full justify-center">
+          <div className="pb-6 flex flex-col items-center w-full justify-center pr-2 pl-2">
             <PromptBox
               prompt={prompt}
               setPrompt={setPrompt}

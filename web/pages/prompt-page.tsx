@@ -58,7 +58,7 @@ const PromptPage: React.FC<PromptProps> = ({ prompt, setPrompt, setModal }) => {
       return (
         <div
           key={b.template}
-          className="p-3 border-2 border-gray-300 rounded-md mb-2 bg-white dark:bg-gray-800 dark:border-gray-600 flex flex-col gap-3 text-lg min-h-[450px]"
+          className="p-2 border-2 border-gray-300 rounded-md mb-2 bg-white dark:bg-gray-800 dark:border-gray-600 flex flex-col gap-1 text-sm min-h-[400px]"
         >
           {parsedTemplate}
           <div>
@@ -251,19 +251,19 @@ const PromptPage: React.FC<PromptProps> = ({ prompt, setPrompt, setModal }) => {
         prompt={prompt}
       />
       <div className="flex flex-col md:flex-row items-center gap-4 mb-2">
-        <h1 className="text-2xl font-bold align-center flex-3">
+        <h1 className="text-xl font-bold align-center flex-3">
           Prompt Builder Playground
         </h1>
         <input
           id="save_name"
           type="text"
-          className="flex-1 p-2 border-2 border-gray-300 rounded-md bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="text-xs flex-1 p-1 border-2 border-gray-300 rounded-md bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-100 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
           placeholder="Save Name"
           defaultValue={`save_${Date.now()}`}
         ></input>
       </div>
 
-      <div className="p-4 min-h-[200px]">{findCategory(category)}</div>
+      <div>{findCategory(category)}</div>
     </div>
   );
 };
