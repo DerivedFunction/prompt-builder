@@ -1,4 +1,4 @@
-import box from "@/images/box.svg";
+import box from "../src/images/box.svg";
 const HomePage: React.FC = () => {
   return (
     <div className="w-full">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import copy from "@/images/copy.svg";
-import erase from "@/images/erase.svg";
+import copy from "../src/images/copy.svg";
+import erase from "../src/images/erase.svg";
 import {
   getHistory,
   deleteAllHistory,

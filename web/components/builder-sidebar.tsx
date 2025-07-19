@@ -1,19 +1,19 @@
 import React from "react";
 import NavItem from "./nav-item";
-import menu_close from "@/images/menu_close.svg";
-import menu_open from "@/images/menu_open.svg";
-import menu from "@/images/menu.svg";
-import command from "@/images/categories/command.svg";
-import style from "@/images/categories/style.svg";
-import roleplay from "@/images/categories/roleplay.svg";
-import define from "@/images/categories/definition.svg";
-import rules from "@/images/categories/rules.svg";
-import text from "@/images/categories/text.svg";
-import code from "@/images/categories/code.svg";
-import input from "@/images/categories/input.svg";
-import erase from "@/images/erase.svg";
-import copy from "@/images/copy.svg";
-import save from "@/images/save.svg";
+import menu_close from "../src/images/menu_close.svg";
+import menu_open from "../src/images/menu_open.svg";
+import menu from "../src/images/menu.svg";
+import command from "../src/images/categories/command.svg";
+import style from "../src/images/categories/style.svg";
+import roleplay from "../src/images/categories/roleplay.svg";
+import define from "../src/images/categories/definition.svg";
+import rules from "../src/images/categories/rules.svg";
+import text from "../src/images/categories/text.svg";
+import code from "../src/images/categories/code.svg";
+import input from "../src/images/categories/input.svg";
+import erase from "../src/images/erase.svg";
+import copy from "../src/images/copy.svg";
+import save from "../src/images/save.svg";
 import { saveDataFromLocalStorage } from "../data/database";
 
 interface SidebarProps {

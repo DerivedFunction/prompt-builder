@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import BuilderSidebar from "../components/builder-sidebar";
-import menu from "@/images/menu.svg";
+import menu from "../src/images/menu.svg";
 import { blocks } from "../data/builder";
-import erase from "@/images/erase.svg";
+import erase from "../src/images/erase.svg";
 
 interface Block {
   category: string;

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import send from "@/images/send.svg";
+import send from "../src/images/send.svg";
 import { aiList } from "../data/ai-list.ts";
 import { addHistoryEntry } from "../data/database.ts";
 

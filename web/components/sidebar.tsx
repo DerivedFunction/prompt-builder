@@ -1,13 +1,12 @@
 import React from "react";
 import NavItem from "./nav-item";
-import menu_close from "@/images/menu_close.svg";
-import menu_open from "@/images/menu_open.svg";
-import menu from "@/images/menu.svg";
-import new_prompt from "@/images/new_prompt.svg";
-import history from "@/images/history.svg";
-import box from "@/images/box.svg";
-import home from "@/images/home.svg";
-
+import menu_close from "../src/images/menu_close.svg";
+import menu_open from "../src/images/menu_open.svg";
+import menu from "../src/images/menu.svg";
+import new_prompt from "../src/images/new_prompt.svg";
+import history from "../src/images/history.svg";
+import box from "../src/images/box.svg";
+import home from "../src/images/home.svg";
 
 interface SidebarProps {
   expand: boolean;
@@ -102,7 +101,6 @@ const Sidebar: React.FC<SidebarProps> = ({
               />
             </div>
           </div>
-          
         </div>
       </div>
       {/* Overlay for mobile */}

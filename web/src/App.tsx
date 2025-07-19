@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Sidebar from "../components/sidebar";
 import PromptBox from "../components/prompt-box";
-import menu from "@/images/menu.svg";
+import menu from "./images/menu.svg";
 import PromptPage from "../pages/prompt-page";
 import HistoryPage from "../pages/history-page";
 import SavePage from "../pages/save-page";

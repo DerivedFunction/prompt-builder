@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import new_prompt from "@/images/new_prompt.svg";
-import erase from "@/images/erase.svg";
+import new_prompt from "../src/images/new_prompt.svg";
+import erase from "../src/images/erase.svg";
 import {
   getSaves,
   deleteAllSaves,
