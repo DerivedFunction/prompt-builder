@@ -10,8 +10,8 @@ import {
 interface HistoryEntry {
   id: number;
   prompt: string;
-    timestamp: number;
-    url: string;
+  timestamp: number;
+  url: string;
 }
 
 const HistoryPage: React.FC = () => {
@@ -61,14 +61,14 @@ const HistoryPage: React.FC = () => {
         <div className="gap-2">
           {history.length > 0 ? (
             <div className="overflow-x-scroll">
-              <table className="w-full border-2 border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600">
+              <table className="w-full border-2 border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600 text-xs">
                 <thead>
                   <tr className="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 font-bold">
-                    <th className="p-3 text-left w-[10%]">Timestamp</th>
-                    <th className="p-3 text-left min-w-[200px] w-[70%]">
+                    <th className="p-2 text-left w-[10%]">Timestamp</th>
+                    <th className="p-2 text-left min-w-[200px] w-[70%]">
                       Prompt
                     </th>
-                    <th className="p-3 text-center min-w-[100px]">
+                    <th className="p-2 text-center min-w-[100px]">
                       <button
                         onClick={() => handleClearAll()}
                         className={`p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700`}
@@ -137,7 +137,7 @@ const HistoryPage: React.FC = () => {
               </table>
             </div>
           ) : (
-            <p className="text-gray-700 dark:text-gray-300 text-center">
+            <p className="text-gray-700 dark:text-gray-300 text-center text-xs">
               No history entries found.
             </p>
           )}

@@ -253,17 +253,17 @@ const SavesPage: React.FC = () => {
         </h1>
 
         {/* Saves Table */}
-        <div className="gap-2">
+        <div className="gap-2 text-xs">
           {saves.length > 0 ? (
             <div className="overflow-x-scroll">
               <table className="w-full border-2 border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600">
                 <thead>
                   <tr className="bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 font-bold">
-                    <th className="p-3 text-left w-[10%]">Timestamp</th>
-                    <th className="p-3 text-left min-w-[200px] w-[70%]">
+                    <th className="p-1 text-left w-[10%]">Timestamp</th>
+                    <th className="p-1 text-left min-w-[200px] w-[70%]">
                       Save Name
                     </th>
-                    <th className="p-3 text-center min-w-[100px]">
+                    <th className="p-1 text-center min-w-[100px]">
                       <button
                         onClick={handleClearAll}
                         className="p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
@@ -284,7 +284,7 @@ const SavesPage: React.FC = () => {
                   {saves.map((entry) => (
                     <tr
                       key={entry.id}
-                      className="border-T border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
+                      className="border-1 border-gray-300 dark:border-gray-600 text-gray-900 dark:text-gray-100"
                     >
                       <td className="p-3">
                         {new Date(entry.timestamp).toLocaleString()}
@@ -324,7 +324,7 @@ const SavesPage: React.FC = () => {
               </table>
             </div>
           ) : (
-            <p className="text-gray-700 dark:text-gray-300 text-center">
+            <p className="text-gray-700 dark:text-gray-300 text-center text-xs">
               No saved prompts found. Click on the save button on the left
               sidebar to save a prompt.
             </p>
