@@ -246,6 +246,13 @@ const SavesPage: React.FC = () => {
         >
           Download Text
         </button>
+        <button
+          onClick={handleClearAll}
+          title="Download Prompts as text"
+          className="p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 text-xs"
+        >
+          Delete All
+        </button>
       </div>
       <div className="p-4 border-2 border-gray-300 rounded-md bg-white dark:bg-gray-800 dark:border-gray-600">
         <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">
@@ -263,21 +270,7 @@ const SavesPage: React.FC = () => {
                     <th className="p-1 text-left min-w-[200px] w-[70%]">
                       Save Name
                     </th>
-                    <th className="p-1 text-center min-w-[100px]">
-                      <button
-                        onClick={handleClearAll}
-                        className="p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
-                        title="Delete all saves"
-                      >
-                        <img
-                          className="w-3.5 aspect-square dark:invert"
-                          src={erase}
-                          alt="Delete All"
-                          height={20}
-                          width={20}
-                        />
-                      </button>
-                    </th>
+                    <th className="p-1 text-center min-w-[100px]"></th>
                   </tr>
                 </thead>
                 <tbody>
