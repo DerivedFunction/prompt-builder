@@ -246,6 +246,7 @@ export const blocks = [
               "humorous",
               "concise",
               "detailed",
+              "detailed and concise",
               "persuasive",
               "informal",
               "empathetic",
@@ -290,7 +291,7 @@ export const blocks = [
     newLine: true,
     blocks: [
       {
-        template: "Refer to these definitions: {definitions} ",
+        template: "Refer to these definitions: \n{definitions} ",
         options: [
           {
             var: "definitions",
@@ -306,7 +307,7 @@ export const blocks = [
     newLine: true,
     blocks: [
       {
-        template: "Examples: {examples} ",
+        template: "Examples: \n{examples} ",
         options: [
           {
             var: "examples",
