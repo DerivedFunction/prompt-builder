@@ -18,7 +18,7 @@ export const aiList = [
     url: "https://grok.com/?q=",
   },
   {
-    name: "DeepSeek AI",
+    name: "DeepSeek",
     url: "https://chat.deepseek.com/",
     needsPerm: true,
   },
@@ -36,7 +36,7 @@ export const aiList = [
     url: "https://chat.mistral.ai/chat?q=",
   },
   {
-    name: "Alibaba Qwen",
+    name: "Qwen",
     url: "https://chat.qwen.ai/",
     needsPerm: true,
   },
