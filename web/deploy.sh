@@ -1,4 +1,5 @@
-rm -rf ../extension/main
-mkdir ../extension/main
+rm -rf ../extension
+mkdir ../extension
 npm run build:extension
-cp -r ./dist/* ../extension/main
+cp -r ./dist/* ../extension
+cp manifest.json background.js ../extension
