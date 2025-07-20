@@ -4,13 +4,13 @@
   "version": "2025.07.18",
   "description": "Build better AI prompts by following a step-by-step guide.",
   "icons": {
-    "32": "icon32.png",
-    "48": "icon48.png"
+    "32": "main/icon32.png",
+    "48": "main/icon48.png"
   },
   "action": {
     "default_icon": {
-      "32": "icon32.png",
-      "48": "icon48.png"
+      "32": "main/icon32.png",
+      "48": "main/icon48.png"
     }
   },
   "background": {
@@ -18,8 +18,9 @@
   },
 
   "side_panel": {
-    "default_path": "index.html"
+    "default_path": "main/index.html"
   },
+  "options": "options/index.html",
   "permissions": ["sidePanel"],
   "optional_permissions": ["scripting", "storage"],
   "optional_host_permissions": [
