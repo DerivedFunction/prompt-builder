@@ -2,5 +2,4 @@ rm -rf extension
 mkdir extension
 npm run build:extension
 cp -r ./dist/* extension
-cp manifest.json extension
-cp background.js extension
+cp -r manifest.json ai-list.json background.js scripts extension

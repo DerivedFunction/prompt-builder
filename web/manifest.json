@@ -20,5 +20,19 @@
   "side_panel": {
     "default_path": "index.html"
   },
-  "permissions": ["sidePanel"]
+  "permissions": ["sidePanel"],
+  "optional_permissions": ["scripting", "storage"],
+  "optional_host_permissions": [
+    "*://*.chatgpt.com/*",
+    "*://copilot.microsoft.com/*",
+    "*://*.claude.ai/*",
+    "*://*.grok.com/*",
+    "*://*.perplexity.ai/*",
+    "*://gemini.google.com/*",
+    "*://chat.deepseek.com/*",
+    "*://chat.qwen.ai/*",
+    "*://chat.mistral.ai/*",
+    "*://*.meta.ai/*",
+    "*://coral.cohere.com/*"
+  ]
 }
