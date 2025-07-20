@@ -3,3 +3,4 @@ mkdir ../extension
 npm run build:extension
 cp -r ./dist/* ../extension
 cp manifest.json background.js ../extension
+cd ../extension && 7z a ../chrome.zip .
