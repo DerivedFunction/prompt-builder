@@ -6,6 +6,7 @@ import PromptPage from "../pages/prompt-page";
 import HistoryPage from "../pages/history-page";
 import SavePage from "../pages/save-page";
 import HomePage from "../pages/home-page";
+import SettingsPage from "../pages/settings-page";
 import "./App.css";
 
 function App() {
@@ -25,6 +26,9 @@ function App() {
       break;
     case "saves":
       mainPage = <SavePage />;
+      break;
+    case "settings":
+      mainPage = <SettingsPage />;
       break;
     default:
       mainPage = <HomePage />;

@@ -7,6 +7,7 @@ import new_prompt from "../src/images/new_prompt.svg";
 import history from "../src/images/history.svg";
 import box from "../src/images/box.svg";
 import home from "../src/images/home.svg";
+import settings from "../src/images/settings.svg";
 
 interface SidebarProps {
   expand: boolean;
@@ -100,6 +101,15 @@ const Sidebar: React.FC<SidebarProps> = ({
                 }}
               />
             </div>
+            <NavItem
+              image={settings}
+              text={"Settings"}
+              expand={expand}
+              onClick={() => {
+                setExpand(false);
+                setCurrentPage("settings");
+              }}
+            />
           </div>
         </div>
       </div>

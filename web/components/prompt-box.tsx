@@ -30,15 +30,18 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
     if (!selectedAI) return;
     let url = selectedAI.url;
     const limit = prompt.length > 8000;
+    const copy = localStorage.getItem("copy") === "true";
+    const suppress = localStorage.getItem("supress") === "true";
     url = `${selectedAI.url}${encodeURIComponent(prompt)}`;
 
-    if (limit || selectedAI.needsPerm) {
+    if (limit || selectedAI.needsPerm || copy) {
       navigator.clipboard.writeText(prompt);
-      window.alert(
-        `${
-          selectedAI.needsPerm ? `` : `Prompt exceeds 8000 chars.`
-        } Prompt copied to clipboard. Paste the prompt in ${chatbot}`
-      );
+      if (!suppress)
+        window.alert(
+          `${
+            selectedAI.needsPerm || copy ? `` : `Prompt exceeds 8000 chars.`
+          } Prompt copied to clipboard. Paste the prompt in ${chatbot}`
+        );
       url = selectedAI.home ?? `https://${new URL(selectedAI.url).hostname}`;
     }
     window.open(url, "_blank"); // Open the URL in a new tab

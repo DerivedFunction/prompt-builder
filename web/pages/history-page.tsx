@@ -100,9 +100,10 @@ const HistoryPage: React.FC = () => {
                           onClick={() => {
                             if (entry.prompt.length > 8000) {
                               navigator.clipboard.writeText(entry.prompt);
-                              window.alert(
-                                `Prompt exceeds 8000 chars. Prompt copied to clipboard. Paste the prompt in ${entry.url}`
-                              );
+                              if (localStorage.getItem("supress") !== "true")
+                                window.alert(
+                                  `Prompt exceeds 8000 chars. Prompt copied to clipboard. Paste the prompt in ${entry.url}`
+                                );
                             }
                             window.open(entry.url, "_blank");
                           }}
