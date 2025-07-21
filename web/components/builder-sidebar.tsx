@@ -96,16 +96,6 @@ const BuilderSidebar: React.FC<SidebarProps> = ({
                 }}
               />
               <NavItem
-                image={code}
-                text={"Code Action"}
-                expand={expand}
-                onClick={() => {
-                  setExpand(false);
-                  setCategory("code");
-                }}
-              />
-
-              <NavItem
                 image={style}
                 text={"Style"}
                 expand={expand}
