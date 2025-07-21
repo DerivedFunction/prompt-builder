@@ -23,7 +23,7 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
    */
   const renderSuggestionButtons = (): JSX.Element[] => {
     return suggestions.sort().map((suggestion: SaveEntry) => (
-      <div
+      <button
         key={suggestion.id}
         onClick={() => {
           handleLoadSave(suggestion);
@@ -31,7 +31,7 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
         className="p-2 w-[75px] text-center border rounded-xl border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 text-xs cursor-pointer"
       >
         {suggestion.name}
-      </div>
+      </button>
     ));
   };
 
