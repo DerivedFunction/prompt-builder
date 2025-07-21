@@ -24,12 +24,12 @@ interface PromptProps {
 const PromptPage: React.FC<PromptProps> = ({ prompt, setPrompt }) => {
   const [expand, setExpand] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [category, setCategory] = useState("command");
+  const [category, setCategory] = useState("input");
   const [inputs, setInputs] = useState<Record<string, string>>({});
 
   // Effect to preserve inputs when switching categories
   useEffect(() => {
-    const storedInputs = localStorage.getItem(`inputs_${category}`);
+    const storedInputs = localStorage.getItem(`input`);
     if (storedInputs) {
       setInputs(JSON.parse(storedInputs));
     }
@@ -79,7 +79,7 @@ const PromptPage: React.FC<PromptProps> = ({ prompt, setPrompt }) => {
   };
   const clearInputs = () => {
     setInputs({});
-    localStorage.removeItem(`inputs_${category}`);
+    localStorage.removeItem(`input`);
   };
 
   function parseTemplateWithComponents(
@@ -167,20 +167,18 @@ const PromptPage: React.FC<PromptProps> = ({ prompt, setPrompt }) => {
   const handleInputChange = (varName: string, value: string) => {
     setInputs((prev) => {
       const newInputs = { ...prev, [varName]: value };
-      localStorage.setItem(`inputs_${category}`, JSON.stringify(newInputs));
-      setPrompt(generateAllOutputs());
+      localStorage.setItem(`input`, JSON.stringify(newInputs));
+      setPrompt(generateAllOutputs(newInputs));
       return newInputs;
     });
   };
 
-  const generateAllOutputs = () => {
+  const generateAllOutputs = (inputsOverride?: Record<string, string>) => {
     let allOutputs = "";
 
     (blocks as Block[]).forEach((block) => {
-      const category = block.category;
       // Load inputs for the current category from local storage
-      const storedInputs = localStorage.getItem(`inputs_${category}`);
-      const categoryInputs = storedInputs ? JSON.parse(storedInputs) : {};
+      const categoryInputs = inputsOverride || inputs;
 
       let hasContent = false;
       let categoryOutput = "";
@@ -245,6 +243,7 @@ const PromptPage: React.FC<PromptProps> = ({ prompt, setPrompt }) => {
         category={category}
         setInputs={setInputs}
         prompt={prompt}
+        setPrompt={setPrompt}
       />
       <div className="flex flex-col md:flex-row items-center gap-4 mb-2">
         <h1 className="text-xl font-bold align-center flex-3">

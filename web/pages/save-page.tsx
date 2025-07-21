@@ -11,10 +11,10 @@ import {
 import { blocks } from "../data/builder";
 
 interface SaveEntry {
-  id: number;
-  name: string;
+  data: Record<string, string>;
   timestamp: number;
-  inputs: { type: string; data: Record<string, string> }[];
+  name: string;
+  id: number;
 }
 interface Block {
   category: string;
@@ -55,11 +55,9 @@ const SavesPage: React.FC = () => {
     }
   };
 
-  const handleLoadSave = (
-    inputs: { type: string; data: Record<string, string> }[]
-  ) => {
+  const handleLoadSave = (input: SaveEntry) => {
     try {
-      loadSaveToLocalStorage(inputs);
+      loadSaveToLocalStorage(input.data);
       alert("Save loaded successfully! ");
     } catch (err) {
       console.error("Failed to load save:", err);
@@ -88,20 +86,11 @@ const SavesPage: React.FC = () => {
 
   const recreatePrompts = (saveData: SaveEntry[]) => {
     const results: string[] = [];
-
     saveData.forEach((save, index) => {
       const prompts: string[] = [];
-
-      // Map category => inputs for quick lookup
-      const inputMap: Record<string, Record<string, string>> = {};
-      save.inputs.forEach((input) => {
-        const categoryName = input.type.replace("inputs_", "");
-        inputMap[categoryName] = input.data;
-      });
-
+      const map: Record<string, string> = save.data;
       // Respect block order
       (blocks as Block[]).forEach((block) => {
-        const categoryInputs = inputMap[block.category] || {};
         let categoryOutput = "";
         let hasContent = false;
 
@@ -110,7 +99,7 @@ const SavesPage: React.FC = () => {
           let blockHasContent = false;
 
           b.options.forEach((option) => {
-            const value = categoryInputs[option.var] || "";
+            const value = map[option.var] || "";
             const placeholder = `{${option.var}}`;
 
             if (template.includes(placeholder)) {
@@ -130,8 +119,7 @@ const SavesPage: React.FC = () => {
 
           if (blockHasContent || template.trim()) {
             // Append template and correct trailing character
-            categoryOutput += template + (block.newLine ? "\n" : " ");
-            console.log(categoryOutput);
+            categoryOutput += (block.newLine ? "\n" : " ") + template;
           }
         });
 
@@ -187,14 +175,7 @@ const SavesPage: React.FC = () => {
         (save) =>
           typeof save.id === "number" &&
           typeof save.name === "string" &&
-          typeof save.timestamp === "number" &&
-          Array.isArray(save.inputs) &&
-          save.inputs.every(
-            (input) =>
-              typeof input.type === "string" &&
-              typeof input.data === "object" &&
-              input.data !== null
-          )
+          typeof save.timestamp === "number"
       );
 
       if (!isValid) {
@@ -285,7 +266,7 @@ const SavesPage: React.FC = () => {
                       <td className="p-3">{entry.name}</td>
                       <td className="pt-3 flex gap-1 items-center justify-center">
                         <button
-                          onClick={() => handleLoadSave(entry.inputs)}
+                          onClick={() => handleLoadSave(entry)}
                           className="p-2 border-1 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700"
                           title="Load this save"
                         >

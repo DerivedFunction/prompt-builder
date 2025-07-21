@@ -3,7 +3,7 @@ interface SaveEntry {
   id?: number;
   name: string;
   timestamp: number;
-  inputs: { type: string; data: Record<string, string> }[];
+  data: Record<string, string>;
 }
 export async function getDB() {
   return openDB("history-db", 1, {
@@ -49,26 +49,12 @@ export async function deleteHistoryEntry(id: number) {
 
 // Function to save data from localStorage to IndexedDB
 export async function saveDataFromLocalStorage(name: string) {
-  const prefix = "inputs_"; // Prefix for input keys in localStorage
-  const inputs = [];
+  // Retrieve and parse the data from localStorage
+  const data = JSON.parse(localStorage.getItem("input") || "");
 
-  // Iterate over all keys in localStorage
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    // Check if the key starts with the specified prefix
-    if (key?.startsWith(prefix)) {
-      try {
-        // Retrieve and parse the data from localStorage
-        const data = JSON.parse(localStorage.getItem(key) || "");
-        inputs.push({ type: key, data });
-      } catch (error) {
-        console.error(`Error parsing data for key ${key}:`, error);
-      }
-    }
-  }
   const db = await getDB();
   await db.add("saves", {
-    inputs,
+    data,
     timestamp: Date.now(),
     name,
   });
@@ -100,46 +86,22 @@ export async function deleteAllSaves() {
 
 /**
  * Loads a specific save into localStorage.
- * This function clears existing 'inputs_' prefixed items and sets new ones from the save.
- * @param inputs - The array of input objects from a save entry.
+ * This function clears existing 'data' prefixed items and sets new ones from the save.
+ *
  */
-export function loadSaveToLocalStorage(
-  inputs: { type: string; data: unknown }[]
-) {
-  // 1. Clear all existing items with the 'inputs_' prefix from localStorage
-  Object.keys(localStorage)
-    .filter((key) => key.startsWith("inputs_"))
-    .forEach((key) => localStorage.removeItem(key));
+export function loadSaveToLocalStorage(data: Record<string, string>) {
+  // 1. Clear all existing items with the 'input' prefix from localStorage
+  localStorage.removeItem("input");
 
   // 2. Add the new items from the selected save to localStorage
-  inputs.forEach((input) => {
-    localStorage.setItem(input.type, JSON.stringify(input.data));
-  });
+  localStorage.setItem("input", JSON.stringify(data));
 }
 
-export const addSave = async (saveData: {
-  name: string;
-  inputs: { type: string; data: Record<string, string> }[];
-  timestamp?: number;
-}) => {
+export const addSave = async (saveData: SaveEntry) => {
   // Validate the save data structure
-  if (!saveData.name || !Array.isArray(saveData.inputs)) {
+  if (!saveData.name || !saveData.data) {
     throw new Error(
-      "Invalid save data format: 'name' and 'inputs' are required."
-    );
-  }
-
-  // Validate inputs array elements
-  if (
-    !saveData.inputs.every(
-      (input) =>
-        typeof input.type === "string" &&
-        typeof input.data === "object" &&
-        input.data !== null
-    )
-  ) {
-    throw new Error(
-      "Invalid save data format: each input must have a 'type' string and 'data' object."
+      "Invalid save data format: 'name' and 'data' are required."
     );
   }
 
@@ -154,7 +116,7 @@ export const addSave = async (saveData: {
     // Create the SaveEntry object
     const save: SaveEntry = {
       name: saveData.name,
-      inputs: saveData.inputs,
+      data: saveData.data,
       timestamp,
     };
 

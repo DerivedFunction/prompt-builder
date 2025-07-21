@@ -9,7 +9,6 @@ import roleplay from "../src/images/categories/roleplay.svg";
 import define from "../src/images/categories/definition.svg";
 import rules from "../src/images/categories/rules.svg";
 import text from "../src/images/categories/text.svg";
-import code from "../src/images/categories/code.svg";
 import input from "../src/images/categories/input.svg";
 import erase from "../src/images/erase.svg";
 import copy from "../src/images/copy.svg";
@@ -25,6 +24,7 @@ interface SidebarProps {
   category: string;
   setInputs: (inputs: Record<string, string>) => void;
   prompt: string;
+  setPrompt: (prompt: string) => void;
 }
 
 const BuilderSidebar: React.FC<SidebarProps> = ({
@@ -36,6 +36,7 @@ const BuilderSidebar: React.FC<SidebarProps> = ({
   setInputs,
   category,
   prompt,
+  setPrompt,
 }) => {
   return (
     <>
@@ -175,13 +176,10 @@ const BuilderSidebar: React.FC<SidebarProps> = ({
             expand={expand}
             onClick={() => {
               setExpand(false);
-              // find all input_XX keys
-              const keys = Object.keys(localStorage).filter((key) =>
-                key.startsWith("inputs_")
-              );
-              keys.forEach((key) => localStorage.removeItem(key));
+              localStorage.removeItem("input");
               setCategory("clear");
               setInputs({});
+              setPrompt("");
               setCategory("roleplay");
             }}
           />

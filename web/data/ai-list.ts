@@ -48,4 +48,8 @@ export const aiList = [
     name: "Cohere Command",
     url: "https://coral.cohere.com/?q=",
   },
+  {
+    name: "Kimi",
+    url: "https://kimi.com",
+  },
 ];

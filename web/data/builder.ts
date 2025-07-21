@@ -133,6 +133,7 @@ export const blocks = [
             var: "tone_style",
             type: "dropdown",
             values: [
+              "clear",
               "friendly",
               "professional",
               "formal",
@@ -222,7 +223,7 @@ export const blocks = [
           {
             var: "other",
             type: "textarea",
-            values: ["Enter text to paste at the end ..."],
+            values: ["What do you want to do?"],
           },
         ],
       },
