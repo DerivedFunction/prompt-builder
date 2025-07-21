@@ -200,7 +200,7 @@ const SavesPage: React.FC = () => {
     event.target.value = "";
   };
   return (
-    <div className="h-full w-full text-gray-900 dark:text-gray-100">
+    <div className="h-full w-full text-gray-900 dark:text-gray-100 mt-2">
       <div className="flex gap-2 mb-4">
         <label
           onClick={() => handleUpload}
