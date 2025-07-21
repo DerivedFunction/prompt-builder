@@ -28,7 +28,10 @@ interface Block {
     }>;
   }>;
 }
-const SavesPage: React.FC = () => {
+interface Props {
+  setCurrentPage: (page: string) => void;
+}
+const SavesPage: React.FC<Props> = ({ setCurrentPage }) => {
   const [saves, setSaves] = useState<SaveEntry[]>([]);
 
   // Fetch saves on component mount
@@ -59,6 +62,7 @@ const SavesPage: React.FC = () => {
     try {
       loadSaveToLocalStorage(input.data);
       alert("Save loaded successfully! ");
+      setCurrentPage("new-prompt");
     } catch (err) {
       console.error("Failed to load save:", err);
       alert("Failed to load save.");

@@ -25,7 +25,7 @@ function App() {
       mainPage = <HistoryPage />;
       break;
     case "saves":
-      mainPage = <SavePage />;
+      mainPage = <SavePage setCurrentPage={setCurrentPage} />;
       break;
     case "settings":
       mainPage = <SettingsPage />;
