@@ -5,24 +5,21 @@ import { loadSaveToLocalStorage } from "../data/database";
 
 interface SaveEntry {
   name: string;
-  data: Record<string, string>;
+  data: Record<string, unknown>;
   id: number;
 }
 
 interface Props {
   setCurrentPage: (page: string) => void;
 }
-/**
- * Renders the home page component with a logo, title, descriptions, and suggestion buttons.
- * @returns {JSX.Element} The HomePage component.
- */
+
 const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
   /**
    * Renders suggestion buttons based on the `suggestions` array.
    * @returns {JSX.Element[]} An array of button elements.
    */
   const renderSuggestionButtons = (): JSX.Element[] => {
-    return suggestions.sort().map((suggestion: SaveEntry) => (
+    return suggestions.sort().map((suggestion) => (
       <button
         key={suggestion.id}
         onClick={() => {
@@ -34,7 +31,6 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
       </button>
     ));
   };
-
   const handleLoadSave = (input: SaveEntry) => {
     try {
       loadSaveToLocalStorage(input.data);
@@ -44,6 +40,7 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
       alert("Something went wrong.");
     }
   };
+
   return (
     <div className="w-full h-full flex-col flex">
       {/* Logo and Title Section */}

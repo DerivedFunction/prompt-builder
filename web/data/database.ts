@@ -3,7 +3,7 @@ interface SaveEntry {
   id?: number;
   name: string;
   timestamp: number;
-  data: Record<string, string>;
+  data: Record<string, unknown>;
 }
 export async function getDB() {
   return openDB("history-db", 1, {
@@ -89,7 +89,7 @@ export async function deleteAllSaves() {
  * This function clears existing 'data' prefixed items and sets new ones from the save.
  *
  */
-export function loadSaveToLocalStorage(data: Record<string, string>) {
+export function loadSaveToLocalStorage(data: Record<string, unknown>) {
   // 1. Clear all existing items with the 'input' prefix from localStorage
   localStorage.removeItem("input");
 
