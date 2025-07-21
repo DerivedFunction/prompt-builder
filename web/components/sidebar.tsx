@@ -30,10 +30,11 @@ const Sidebar: React.FC<SidebarProps> = ({
         className={`fixed top-0 left-0 h-screen transition-all z-50 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-700 ${
           expand
             ? "w-64 shadow-lg md:shadow-none"
-            : "md:w-12 w-0 max-md:opacity-0"
+            : "md:w-12 md:opacity-100 md:pointer-events-auto max-md:w-0 max-md:opacity-0 max-md:pointer-events-none"
         }`}
       >
         <div className="flex flex-col h-full p-1">
+          {/* Toggle Button for Desktop */}
           <div className="md:block hidden">
             <div
               onMouseEnter={() => setIsHovered(true)}
@@ -50,6 +51,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               />
             </div>
           </div>
+          {/* Close Button for Mobile */}
           <div className="md:hidden flex justify-end pr-2">
             <div className="group relative flex items-center justify-center hover:bg-gray-500/20 transition-all duration-300 h-9 w-9 aspect-square rounded-lg cursor-pointer">
               <img
@@ -62,6 +64,7 @@ const Sidebar: React.FC<SidebarProps> = ({
               />
             </div>
           </div>
+          {/* Navigation Items */}
           <div className="pt-10 h-full flex flex-col justify-between">
             <div className="">
               <NavItem
@@ -113,7 +116,7 @@ const Sidebar: React.FC<SidebarProps> = ({
           </div>
         </div>
       </div>
-      {/* Overlay for mobile */}
+      {/* Overlay for Mobile */}
       {expand && (
         <div
           className="fixed inset-0 bg-black/40 z-40 md:hidden"
