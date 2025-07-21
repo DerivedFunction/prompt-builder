@@ -32,20 +32,20 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
     const limit = prompt.length > 8000;
     const copy = localStorage.getItem("copy") === "true";
     const suppress = localStorage.getItem("supress") === "true";
-    url = `${selectedAI.url}${encodeURIComponent(prompt)}`;
-
-    if (limit || selectedAI.needsPerm || copy) {
-      navigator.clipboard.writeText(prompt);
-      if (!suppress)
-        window.alert(
-          `${
-            selectedAI.needsPerm || copy ? `` : `Prompt exceeds 8000 chars.`
-          } Prompt copied to clipboard. Paste the prompt in ${chatbot}`
-        );
-      url = selectedAI.home ?? `https://${new URL(selectedAI.url).hostname}`;
+    url =
+      selectedAI.needsPerm || copy
+        ? selectedAI.home ?? `https://${new URL(selectedAI.url).hostname}`
+        : `${selectedAI.url}${encodeURIComponent(prompt)}`;
+    navigator.clipboard.writeText(prompt);
+    addHistoryEntry(prompt, url);
+    if (!suppress && (limit || selectedAI.needsPerm || copy)) {
+      window.alert(
+        `${
+          selectedAI.needsPerm || copy ? `` : `Prompt exceeds 8000 chars.`
+        } Prompt copied to clipboard. Paste the prompt in ${chatbot}`
+      );
     }
     window.open(url, "_blank"); // Open the URL in a new tab
-    await addHistoryEntry(prompt, url);
     setPrompt("");
   }
 
