@@ -9,6 +9,7 @@ const SettingsPage: React.FC = () => {
       <div className="w-full flex text-md mt-2 p-4 justify-center border-2 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400">
         <legend>Copy Prompt Instead:</legend>
         <select
+          className="bg-[var(--background)]"
           defaultValue={localStorage.getItem("copy") || "false"}
           onChange={(e) => {
             localStorage.setItem("copy", e.target.value);
@@ -22,6 +23,7 @@ const SettingsPage: React.FC = () => {
       <div className="w-full flex text-md mt-2 p-4 justify-center border-2 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400">
         <legend>Suppress Copy Alerts:</legend>
         <select
+          className="bg-[var(--background)]"
           defaultValue={localStorage.getItem("supress") || "false"}
           onChange={(e) => {
             localStorage.setItem("supress", e.target.value);
@@ -35,6 +37,7 @@ const SettingsPage: React.FC = () => {
       <div className="w-full flex text-md mt-2 p-4 justify-center border-2 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400">
         <legend>Open In Same Tab (Web/Firefox only):</legend>
         <select
+          className="bg-[var(--background)]"
           defaultValue={localStorage.getItem("sameTab") || "false"}
           onChange={(e) => {
             localStorage.setItem("sameTab", e.target.value);
