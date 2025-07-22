@@ -32,7 +32,7 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
     const limit = prompt.length > 8000;
     const copy = localStorage.getItem("copy") === "true";
     const suppress = localStorage.getItem("supress") === "true";
-    const newTab = localStorage.getItem("openLinksInNewTab") === "true";
+    const sameTab = localStorage.getItem("sameTab") === "true";
     url =
       selectedAI.needsPerm || copy
         ? selectedAI.home ?? `https://${new URL(selectedAI.url).hostname}`
@@ -46,7 +46,7 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
         } Prompt copied to clipboard. Paste the prompt in ${chatbot}`
       );
     }
-    window.open(url, newTab ? "_blank" : "_self"); // Open the URL in a new tab
+    window.open(url, sameTab ? "_self" : "_blank"); // Open the URL in a new tab
     setPrompt("");
   }
 
