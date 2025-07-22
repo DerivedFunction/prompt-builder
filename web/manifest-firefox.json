@@ -17,5 +17,10 @@
     "default_icon": "icon48.png",
     "default_title": "Prompt Builder",
     "default_panel": "index.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "prompt-builder@DerivedFunction"
+    }
   }
 }
