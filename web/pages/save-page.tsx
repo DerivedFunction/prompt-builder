@@ -61,7 +61,6 @@ const SavesPage: React.FC<Props> = ({ setCurrentPage }) => {
   const handleLoadSave = (input: SaveEntry) => {
     try {
       loadSaveToLocalStorage(input.data);
-      alert("Save loaded successfully! ");
       setCurrentPage("new-prompt");
     } catch (err) {
       console.error("Failed to load save:", err);
