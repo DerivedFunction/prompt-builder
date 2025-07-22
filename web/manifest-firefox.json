@@ -13,12 +13,9 @@
       "48": "icon48.png"
     }
   },
-  "background": {
-    "service_worker": "background.js"
-  },
-
-  "side_panel": {
-    "default_path": "index.html"
-  },
-  "permissions": ["sidePanel"]
+  "sidebar_action": {
+    "default_icon": "icon48.png",
+    "default_title": "Prompt Builder",
+    "default_panel": "index.html"
+  }
 }

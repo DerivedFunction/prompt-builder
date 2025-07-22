@@ -6,7 +6,6 @@ export const aiList = [
   {
     name: "MS Copilot",
     url: "https://copilot.microsoft.com/?q=",
-    limit: 10240,
   },
   {
     name: "Google Gemini",
@@ -50,6 +49,7 @@ export const aiList = [
   },
   {
     name: "Kimi",
-    url: "https://kimi.com",
+    url: "https://kimi.com/",
+    needsPerm: true,
   },
 ];

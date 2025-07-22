@@ -32,6 +32,19 @@ const SettingsPage: React.FC = () => {
           <option value="false">No</option>
         </select>
       </div>
+      <div className="w-full flex text-md mt-2 p-4 justify-center border-2 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400">
+        <legend>Open Links In New Tab (Works On Web/Firefox only):</legend>
+        <select
+          defaultValue={localStorage.getItem("openLinksInNewTab") || "true"}
+          onChange={(e) => {
+            localStorage.setItem("openLinksInNewTab", e.target.value);
+          }}
+          id="open-links-form"
+        >
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
     </div>
   );
 };
