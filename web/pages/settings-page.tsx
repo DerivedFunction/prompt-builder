@@ -7,7 +7,7 @@ const SettingsPage: React.FC = () => {
         <p className="text-2xl font-medium ">Settings</p>
       </div>
       <div className="w-full flex text-md mt-2 p-4 justify-center border-2 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400">
-        <legend>Copy Prompt Instead:</legend>
+        <legend>Copy Prompt Instead: </legend>
         <select
           className="bg-[var(--background)]"
           defaultValue={localStorage.getItem("copy") || "false"}
@@ -21,7 +21,7 @@ const SettingsPage: React.FC = () => {
         </select>
       </div>
       <div className="w-full flex text-md mt-2 p-4 justify-center border-2 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400">
-        <legend>Suppress Copy Alerts:</legend>
+        <legend>Suppress Copy Alerts: </legend>
         <select
           className="bg-[var(--background)]"
           defaultValue={localStorage.getItem("supress") || "false"}
@@ -35,7 +35,7 @@ const SettingsPage: React.FC = () => {
         </select>
       </div>
       <div className="w-full flex text-md mt-2 p-4 justify-center border-2 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400">
-        <legend>Open In Same Tab (Web/Firefox only):</legend>
+        <legend>Open In Same Tab (Web/Firefox only): </legend>
         <select
           className="bg-[var(--background)]"
           defaultValue={localStorage.getItem("sameTab") || "false"}
