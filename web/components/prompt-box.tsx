@@ -117,7 +117,7 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
               }}
             >
               <img
-                className="w-3.5 aspect-square dark:invert"
+                className="w-3.5 aspect-square invert"
                 src={send}
                 alt=""
                 height={20}
