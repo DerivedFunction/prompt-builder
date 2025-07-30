@@ -10,10 +10,12 @@ interface SaveEntry {
 }
 
 interface Props {
+  prompt: string;
   setCurrentPage: (page: string) => void;
+  setPrompt: (prompt: string) => void;
 }
 
-const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
+const HomePage: React.FC<Props> = ({ setCurrentPage, setPrompt, prompt }) => {
   /**
    * Renders suggestion buttons based on the `suggestions` array.
    * @returns {JSX.Element[]} An array of button elements.
@@ -23,7 +25,12 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
       <button
         key={suggestion.id}
         onClick={() => {
-          handleLoadSave(suggestion);
+          const quickSuggestions = localStorage.getItem("quickSuggestions");
+          if (quickSuggestions === "true") {
+            setPrompt(`${suggestion.name} ${prompt}`);
+            (document.body.querySelector("#promptbox") as HTMLTextAreaElement | null)?.focus();
+          }
+          else handleLoadSave(suggestion);
         }}
         className="p-2 w-[75px] text-center border rounded-xl border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 text-xs cursor-pointer"
       >

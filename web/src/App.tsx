@@ -31,7 +31,7 @@ function App() {
       mainPage = <SettingsPage />;
       break;
     default:
-      mainPage = <HomePage setCurrentPage={setCurrentPage} />;
+      mainPage = <HomePage setCurrentPage={setCurrentPage} setPrompt={setPrompt} prompt={prompt} />;
       break;
   }
   return (

@@ -61,6 +61,7 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
         className={`w-full bg-white dark:bg-gray-800 p-4 rounded-3xl transition-all shadow-sm max-w-3xl mr-2 ml-2`}
       >
         <textarea
+          id="promptbox"
           className="outline-none w-full resize-none overflow-y-auto break-words bg-transparent text-gray-900 dark:text-gray-100 placeholder-gray-400 dark:placeholder-gray-500 rounded-md p-2"
           rows={2}
           placeholder={`Message ${chatbot}`}
