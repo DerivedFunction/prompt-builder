@@ -1,5 +1,10 @@
+import { useEffect, useState } from "react";
 import box from "../src/images/box.svg";
 const SettingsPage: React.FC = () => {
+  const [copy, setCopy] = useState(true);
+  useEffect(() => {
+    setCopy(localStorage.getItem("copy") === "true");
+  }, []);
   return (
     <div className="w-full">
       <div className="flex items-center gap-3 justify-center">
@@ -13,8 +18,23 @@ const SettingsPage: React.FC = () => {
           defaultValue={localStorage.getItem("copy") || "false"}
           onChange={(e) => {
             localStorage.setItem("copy", e.target.value);
+            setCopy(e.target.value === "true");
           }}
           id="copy-form"
+        >
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+      <div className={`${copy ? "hidden" : ""} w-full flex text-md mt-2 p-4 justify-center border-2 rounded border-gray-300 text-gray-600 dark:border-gray-600 dark:text-gray-400`}>
+        <legend>Use prompt parameter: </legend>
+        <select
+          className="bg-[var(--background)]"
+          defaultValue={localStorage.getItem("prompt") || "false"}
+          onChange={(e) => {
+            localStorage.setItem("prompt", e.target.value);
+          }}
+          id="prompt-form"
         >
           <option value="true">Yes</option>
           <option value="false">No</option>

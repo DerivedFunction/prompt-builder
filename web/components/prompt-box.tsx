@@ -29,15 +29,20 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
     const selectedAI = aiList.find((ai) => ai.name === chatbot);
     if (!selectedAI) return;
     let url = selectedAI.url;
-    const limit = prompt.length > 8000;
+    const limit = prompt.length > 8000; // use home url and copy if past limit
     const copy = localStorage.getItem("copy") === "true";
     const suppress = localStorage.getItem("supress") === "true";
     const sameTab = localStorage.getItem("sameTab") === "true";
+    const promptParam = localStorage.getItem("prompt") === "true";
     url =
-      selectedAI.needsPerm || copy
+      selectedAI.needsPerm || copy || limit /** If it needsPerm (no ?q=), we copy, or we past the limit, go to home url */
         ? selectedAI.home ?? `https://${new URL(selectedAI.url).hostname}`
-        : `${selectedAI.url}${encodeURIComponent(prompt)}`;
-    navigator.clipboard.writeText(prompt);
+        : promptParam /** Else, if we have the prompt parementer, build the url with ?prompt= */
+        ? `${selectedAI.url.split("?")[0]}?prompt=${encodeURIComponent(prompt)}`
+          : `${selectedAI.url}${encodeURIComponent(prompt)}`; /** Else, the url already includes the ?q= */
+    // Copy to clipboard if told to copy, if prompt is greater than limit, or it needs permission w/o prompt parameter
+    if (copy || limit || (selectedAI.needsPerm && !promptParam))
+      navigator.clipboard.writeText(prompt);
     addHistoryEntry(prompt, url);
     if (!suppress && (limit || selectedAI.needsPerm || copy)) {
       window.alert(
