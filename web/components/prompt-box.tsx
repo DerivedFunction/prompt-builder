@@ -66,6 +66,12 @@ const PromptBox: React.FC<PromptBoxProps> = ({ prompt, setPrompt }) => {
           placeholder={`Message ${chatbot}`}
           onChange={(e) => setPrompt(e.target.value)}
           value={prompt}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSendClick();
+            }
+          }}
           required
         />
 
