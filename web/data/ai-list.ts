@@ -4,8 +4,8 @@ export const aiList = [
     url: "https://chatgpt.com/?q=",
   },
   {
-    name: "MS Copilot",
-    url: "https://copilot.microsoft.com/?q=",
+    name: "Anthropic Claude",
+    url: "https://claude.ai/new?q=",
   },
   {
     name: "Google Gemini",
@@ -22,10 +22,6 @@ export const aiList = [
     needsPerm: true,
   },
   {
-    name: "Anthropic Claude",
-    url: "https://claude.ai/new?q=",
-  },
-  {
     name: "Perplexity AI",
     url: "https://www.perplexity.ai/search/new?q=",
     home: "https://www.perplexity.ai/",
@@ -33,6 +29,10 @@ export const aiList = [
   {
     name: "Le Chat Mistral",
     url: "https://chat.mistral.ai/chat?q=",
+  },
+  {
+    name: "MS Copilot",
+    url: "https://copilot.microsoft.com/?q=",
   },
   {
     name: "Qwen",
@@ -44,12 +44,25 @@ export const aiList = [
     url: "https://www.meta.ai/?prompt=",
   },
   {
-    name: "Cohere Command",
+    name: "Cohere Coral",
     url: "https://coral.cohere.com/?q=",
   },
   {
     name: "Kimi",
     url: "https://kimi.com/",
     needsPerm: true,
+  },
+  {
+    name: "Z.ai",
+    url: "https://chat.z.ai/?q=",
+  },
+  {
+    name: "Poe",
+    url: "https://poe.com/",
+    needsPerm: true,
+  },
+  {
+    name: "You.com",
+    url: "https://you.com/search?q=",
   },
 ];
