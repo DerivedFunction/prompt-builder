@@ -13,7 +13,7 @@ export const aiList = [
     needsPerm: true,
   },
   {
-    name: "Grok (xAI)",
+    name: "Grok",
     url: "https://grok.com/?q=",
   },
   {
@@ -22,7 +22,7 @@ export const aiList = [
     needsPerm: true,
   },
   {
-    name: "Perplexity AI",
+    name: "Perplexity",
     url: "https://www.perplexity.ai/search/new?q=",
     home: "https://www.perplexity.ai/",
   },
