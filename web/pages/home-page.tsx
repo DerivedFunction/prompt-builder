@@ -48,20 +48,6 @@ const HomePage: React.FC<Props> = ({ setCurrentPage }) => {
         <img src={box} alt="logo icon" className="h-16 dark:invert" />
         <h1 className="text-2xl font-medium">AI Prompt Builder</h1>
       </div>
-
-      {/* Main Description */}
-      <p className="text-md mt-2 text-center">
-        Build better AI prompts. All in one place.
-      </p>
-
-      {/* Additional Notes */}
-      <p className="text-xs mt-2 text-center">
-        All prompts are stored locally and generated in your browser.
-        <span className="text-gray-600 dark:text-gray-400">
-          {" "}
-          AI-generated content can make mistakes. Check for important info.
-        </span>
-      </p>
       <div className="flex-1"></div>
       {/* Suggestion Buttons */}
       <div className="w-full flex justify-center">
