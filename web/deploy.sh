@@ -8,4 +8,4 @@ cp manifest-firefox.json ../firefox/manifest.json
 rm ../firefox/background.js
 cd ../extension && 7z a ../chrome.zip .
 cd ../firefox && 7z a ../firefox.zip .
-7z a -xr@.gitignore ../source.zip .
+# 7z a -xr@.gitignore ../source.zip .
