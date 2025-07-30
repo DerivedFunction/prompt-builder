@@ -26,7 +26,7 @@ const HomePage: React.FC<Props> = ({ setCurrentPage, setPrompt, prompt }) => {
         key={suggestion.id}
         onClick={() => {
           const quickSuggestions = localStorage.getItem("quickSuggestions");
-          if (quickSuggestions === "true") {
+          if (quickSuggestions === "true" || quickSuggestions === null) {
             setPrompt(`${suggestion.name} ${prompt}`);
             (document.body.querySelector("#promptbox") as HTMLTextAreaElement | null)?.focus();
           }
